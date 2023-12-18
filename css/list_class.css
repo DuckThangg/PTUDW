@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background-image: url(../images/background.jpg);
+    background-size: 100%;
+}
+
+
+
+header{
+    display: flex;
+    justify-content: space-around;
+}
+
+header img{
+    width: 120px;
+}
+
+header ul{
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+header li{
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* Định dạng bảng */
+.my-table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+/* Định dạng dòng chẵn */
+.even-row {
+    background-color: #ffffff; /* Màu nền trắng */
+}
+
+/* Định dạng dòng lẻ */
+.odd-row {
+    background-color: #a8e6cf; /* Màu nền xanh lục */
+}
+
+/* Định dạng các ô trong bảng */
+.my-table td {
+    text-align: center; /* Căn giữa nội dung trong ô */
+    padding: 8px; /* Khoảng cách lề để tạo không gian xung quanh nội dung */
+}
+
+.table{
+    padding:  50px 0;
+    background-color: whitesmoke;
+    width: 80%;
+    margin: 50px auto;
+    border-radius: 20px;
+}
+
+.form {
+    margin-left: 420px;
+    background-color: white; /* Màu nền của form */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+    width: 500px; /* Độ rộng của form */
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: calc(100% - 10px); /* Chiều rộng của input trừ đi padding */
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    background-color: #007bff; /* Màu nền của nút submit */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Màu nền khi hover nút submit */
+}

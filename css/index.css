@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background-image: url(../images/background.jpg);
+    background-size: 100%;
+}
+
+
+
+header{
+    display: flex;
+    justify-content: space-around;
+}
+
+header img{
+    width: 120px;
+}
+
+header ul{
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+header li{
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none;
+}
+
+/* ------------------------------ */
+.greeting{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 150px;
+}
+
+.greeting h1{
+    font-size: 60px;
+    margin-bottom: 30px;
+}
+.greeting p{
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.greeting button{
+    font-size: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: papayawhip;
+}
+
+
+.greeting img{
+    width: 400px;
+}
+
+h2{
+    text-align: center;
+}
+.form{
+    text-align: center;
+}
+
+
