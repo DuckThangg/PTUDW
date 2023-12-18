@@ -7,9 +7,9 @@
     <title>Đăng nhập</title>
 </head>
 <body>
-    <div style ="display:flex;gap: 50px; justify-content: center; width:100%">
+    <div style ="display:flex;gap: 50px; justify-content: center; width:100%; margin-top:120px">
         <div>
-            <a href="/PHP/BTL/index.php"> <img  src="../images/icon-2.png" alt=""> </a>
+            <a  href="/PHP/BTL/index.php"> <img style="margin-top:70px" src="../images/icon-2.png" alt=""> </a>
         </div>
     
         <div class="form">
@@ -67,8 +67,8 @@
             $sql = "INSERT INTO users (user_name,user_password,chuc_vu,phone) VALUES ('$user_name','$user_password','$position','$phone')";
             
             if ($conn->query($sql) === TRUE) {
-                echo "Đăng kí thành công, Hello $user_name <br>";
-                echo "<a href='/PHP/BTL/html/login.html'>Về trang đăng nhập</a> ";
+                echo "<h2 style = 'color :white;text-align:center'> Đăng kí thành công, Hello $user_name </h2> <br>";
+                echo "<button style='margin-left: 45%;'> <a href='/PHP/BTL/html/login.html'>Về trang đăng nhập</a> </button>";
             } else {
                 echo "Lỗi: " . $sql . "<br>" . $conn->error;
             }

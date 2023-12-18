@@ -4,6 +4,8 @@ body {
     height: 100vh;
     background-image: url(../images/background.jpg);
     background-size: 100%;
+    background-attachment: fixed;
+
 }
 
 div img{
