@@ -26,17 +26,42 @@
             
         }
         if(isset($_SESSION['user_name'])){
-            echo "
-                <div>
-                    <ul>
-                        <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
-                        <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
-                        <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
-                        <li><a href=''>Phụ huynh</a></li>
-                        <li><a href=''>Đăng kí học</a></li>
-                        <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-                    </ul>
-                </div> ";
+            require 'D:\xampp\htdocs\PHP\BTL\php\connect.php';
+            $user_name = $_SESSION['user_name'];
+            $sql = "SELECT *FROM users WHERE user_name = '$user_name' ";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user_role = $row['chuc_vu'];
+                // Tài khoản đăng nhập là giáo viên
+                if($user_role == 'Giáo viên'){
+                    echo "
+                        <div>
+                            <ul>
+                                <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
+                                <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
+                                <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
+                                <li><a href=''>Phụ huynh</a></li>
+                                <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            </ul>
+                        </div> ";
+                }
+                // Tài khoản đăng nhập là phụ huynh
+                elseif($user_role == 'Phụ huynh'){
+                    echo "
+                        <div>
+                            <ul>
+                                <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
+                                <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
+                                <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
+                                <li><a href=''>Đăng ký học</a></li>
+                                <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            </ul>
+                        </div> ";
+                }
+            }
         }
         ?>
 
