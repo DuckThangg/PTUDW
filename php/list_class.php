@@ -36,10 +36,12 @@
         </form>
     </div>
 
+    
 
-    <div class="table">
+
     <?php
         if(isset($_GET["id_lop"])){
+            echo "<div class='table'>";
             require 'connect.php';
             mysqli_set_charset($conn, 'UTF8');
             $id_lop=$_GET["id_lop"];
@@ -78,6 +80,7 @@
             }
             $conn->close();
         }
+        echo "</div>";
     ?>
     </div>
 

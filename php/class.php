@@ -24,8 +24,39 @@
         </div>
     </header>
 
-    <button><a href="/PHP/BTL/php/list_class.php">Xem thông tin lớp học</a></button>
+    
+    <?php
+        require 'connect.php';
+        
+        mysqli_set_charset($conn, 'UTF8');
+        session_start();
+        $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
+        if (isset($_SESSION['user_name'])){
+            $user_name = $_SESSION['user_name'];
 
+            $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
+            $result = $mysqli->query($query);
+
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $position = $row['chuc_vu'];
+
+                if ($position === 'ADMIN') {
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/allocation.php'>Phân bổ giáo viên phụ trách </a></button>";
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Mở thêm lớp học</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Thay đổi thông tin lớp học</a></button>";
+                } elseif ($position === 'Giáo viên') {
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Đăng kí mở lớp</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
+                } elseif ($position === 'Phụ huynh') {
+                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
+                } 
+            } else {
+                echo "ban chua dang nhap";
+            }   
+        } 
+    ?>
 
     <div class="table">
     <?php
