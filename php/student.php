@@ -50,7 +50,6 @@
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
                 } elseif ($position === 'Phụ huynh') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Cập nhật thông tin</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
                 }
             } else {
                 echo "ban chua dang nhap";

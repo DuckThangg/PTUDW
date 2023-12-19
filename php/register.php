@@ -27,9 +27,8 @@
                     <label for="position">Chức vụ </label>
                     <select name="position">
                     <?php
-                // Kết nối CSDL và truy vấn dữ liệu
                     require 'connect.php';
-                    $sql = "SELECT DISTINCT chuc_vu FROM users"; // Thay 'flights' bằng tên bảng của bạn
+                    $sql = "SELECT DISTINCT chuc_vu FROM users"; 
                     mysqli_set_charset($conn, 'UTF8');
                     $result = $conn->query($sql);
 

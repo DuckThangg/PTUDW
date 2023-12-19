@@ -108,3 +108,11 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #0056b3; /* Màu nền khi hover nút submit */
 }
+
+.change_class{
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+}

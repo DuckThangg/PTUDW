@@ -41,9 +41,9 @@
                 $position = $row['chuc_vu'];
 
                 if ($position === 'ADMIN') {
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Thêm giáo viên</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xóa giáo viên</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Thay đổi thông tin giáo viên</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/add_teacher.php'>Thêm giáo viên</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/delete_teacher.php'>Xóa giáo viên</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/change_teacher.php'>Thay đổi thông tin giáo viên</a></button>";
                 } elseif ($position === 'Giáo viên') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Thay đổi thông tin</a></button>";
                 } elseif ($position === 'Phụ huynh') {
