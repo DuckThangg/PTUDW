@@ -41,7 +41,7 @@
                 $position = $row['chuc_vu'];
 
                 if ($position === 'ADMIN') {
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Thêm sửa xóa học sinh</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/add_student.php'>Thêm học sinh</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Cập nhật thông tin</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
                 } elseif ($position === 'Giáo viên') {
