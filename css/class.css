@@ -6,13 +6,11 @@
 
 
 body{
-    background-image: url(../images/background.jpg);
+    background-image: url(/PHP/BTL/images/background.jpg);
     background-size: 100%;
     background-attachment: fixed;
 
 }
-
-
 
 header{
     display: flex;
@@ -46,14 +44,20 @@ a{
     margin: auto;
     border-collapse: collapse;
 }
-
+.table{
+    padding:  50px 0;
+    background-color: whitesmoke;
+    width: 80%;
+    margin: 50px auto;
+    border-radius: 20px;
+}
 /* Định dạng dòng chẵn */
-.even-row {
+.table .even-row {
     background-color: #ffffff; /* Màu nền trắng */
 }
 
 /* Định dạng dòng lẻ */
-.odd-row {
+.table .odd-row {
     background-color: #a8e6cf; /* Màu nền xanh lục */
 }
 
@@ -63,10 +67,3 @@ a{
     padding: 8px; /* Khoảng cách lề để tạo không gian xung quanh nội dung */
 }
 
-.table{
-    padding:  50px 0;
-    background-color: whitesmoke;
-    width: 80%;
-    margin: 50px auto;
-    border-radius: 20px;
-}

@@ -6,7 +6,7 @@
 
 
 body{
-    background-image: url(../images/background.jpg);
+    background-image: url(/PHP/BTL/images/background.jpg);
     background-attachment: fixed;
     background-size: 100%;
 }
@@ -45,14 +45,25 @@ a{
     margin: auto;
     border-collapse: collapse;
 }
+.table{
+    padding:  50px 0;
+    background-color: whitesmoke;
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 20px;
+}
 
+.my-table th {
+    text-align: center; /* Căn giữa nội dung trong ô */
+    padding: 8px; /* Khoảng cách lề để tạo không gian xung quanh nội dung */
+}
 /* Định dạng dòng chẵn */
-.even-row {
+.table .even-row {
     background-color: #ffffff; /* Màu nền trắng */
 }
 
 /* Định dạng dòng lẻ */
-.odd-row {
+.table .odd-row {
     background-color: #a8e6cf; /* Màu nền xanh lục */
 }
 
@@ -62,10 +73,31 @@ a{
     padding: 8px; /* Khoảng cách lề để tạo không gian xung quanh nội dung */
 }
 
-.table{
-    padding:  50px 0;
-    background-color: whitesmoke;
-    width: 80%;
-    margin: 50px auto;
-    border-radius: 20px;
+.search-container {
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 45px;
+}
+
+#searchFilter, #search {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+Button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#studentTable {
+    border-collapse: collapse;
+}
+
+#studentTable th, #studentTable td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
 }
