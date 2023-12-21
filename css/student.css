@@ -38,7 +38,10 @@ header li{
 a{
     text-decoration: none;
 }
-
+.col-md-3 #insert{
+    text-align: right;
+    padding: 10px;
+}
 /* Định dạng bảng */
 .my-table {
     width: 90%;
@@ -84,13 +87,25 @@ a{
     margin-right: 10px;
 }
 
-Button {
+button {
     padding: 8px 16px;
     background-color: #007BFF;
     color: #fff;
     border: none;
     cursor: pointer;
 }
+button a{
+    text-decoration: none;
+    color:white;
+}
+button a:hover{
+    text-decoration: none;
+    color:white;
+}
+button:hover {
+    background-color: #01458e;
+}
+
 
 #studentTable {
     border-collapse: collapse;
