@@ -131,14 +131,14 @@
                         <?php
                             //Hiển thị họ tên giáo viên
                             $user_name = $_SESSION['user_name'];
-                            $sql_name = "SELECT users.*, giao_vien.ten_giao_vien FROM users LEFT JOIN giao_vien ON SOUNDEX(users.fullname) = SOUNDEX(giao_vien.ten_giao_vien) WHERE users.user_name = '$user_name'";
+                            $sql_name = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
                             $result= $conn->query($sql_name);
                             if($result->num_rows > 0){
                                 $row = $result->fetch_assoc();
                                 echo "<h4>". $row['ten_giao_vien'] . "</h4>";
                             }
                             else{
-                                echo "Không có thông tin để hiển thị";
+                                echo "<h4>" . "Không có thông tin để hiển thị" . "</h4>";
                             }
                         ?>
                     </p>
@@ -181,7 +181,7 @@
                                 <div class="col-md-8" style="text-align:left">
                                     <?php
                                         $user_name = $_SESSION['user_name'];
-                                        $sql = "SELECT users.*, giao_vien.* FROM users LEFT JOIN giao_vien ON SOUNDEX(users.fullname) = SOUNDEX(giao_vien.ten_giao_vien) WHERE users.user_name = '$user_name'";
+                                        $sql = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
                                         $result= $conn->query($sql);
                                         if($result->num_rows > 0){
                                             $i = 0;
@@ -238,14 +238,8 @@
                                 $user_name = $_SESSION['user_name'];
 
                                 //Update bảng giáo viên
-                                $sql_update_teacher = "UPDATE giao_vien AS gv
-                                    INNER JOIN users AS u ON gv.ten_giao_vien LIKE u.fullname
-                                    SET 
-                                    gv.ten_giao_vien = '$newName',
-                                    gv.dien_thoai_gv = '$newPhone',
-                                    gv.ngay_sinh_gv = '$newDate',
-                                    gv.gioi_tinh_gv = '$newGender'
-                                    WHERE u.user_name = '$user_name'";
+                                $sql_update_teacher = "UPDATE giao_vien SET ten_giao_vien = '$newName', dien_thoai_gv = '$newPhone',
+                                    ngay_sinh_gv = '$newDate', gioi_tinh_gv = '$newGender' WHERE id_giao_vien = '$user_name'";
 
                                 $result_update = $conn->query($sql_update_teacher);
                                 // Update fullname bảng user

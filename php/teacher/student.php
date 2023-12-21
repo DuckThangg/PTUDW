@@ -8,9 +8,9 @@
     <script>
         function searchTable() {
             var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search_input");
+            input = document.querySelector("#search_input");
             filter = input.value.toUpperCase();
-            table = document.getElementById("studentTable");
+            table = document.querySelector("#studentTable");
             tr = table.getElementsByTagName("tr");
 
             for (i = 0; i < tr.length; i++) {
@@ -61,17 +61,17 @@
         mysqli_set_charset($conn, 'UTF8');
         session_start();
         $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-        if (isset($_SESSION['user_name'])){
+        if (isset($_SESSION['user_name'])) {
             $user_name = $_SESSION['user_name'];
-
-            $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
+    
+            $query = "SELECT chuc_vu, lop_phu_trach FROM users JOIN giao_vien ON users.user_name = giao_vien.id_giao_vien WHERE user_name = '$user_name'";
             $result = $mysqli->query($query);
-
+    
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $position = $row['chuc_vu'];
             } else {
-                echo "ban chua dang nhap";
+                echo "Bạn chưa đăng nhập";
             }   
         } 
     ?>
@@ -79,31 +79,24 @@
 <div class="container table">
         <div class="row">
             <div class="col-md-8 search-container">
+                <!-- Tìm kiếm học sinh theo lựa chọn -->
                 <form method="post">
                     <label for="searchFilter">Lọc theo:</label>
-                    <select id="searchFilter" name="searchFilter" >
-                        <option style="color:gray">--Chọn--</option>
-                        <option value="ten_hoc_sinh" <?php $searchFilter = isset($_POST['searchFilter']) ? $_POST['searchFilter'] : '';  echo ($searchFilter == 'ten_hoc_sinh');?>>Tên học sinh</option>
-                        <option value="id_hoc_sinh" <?php $searchFilter = isset($_POST['searchFilter']) ? $_POST['searchFilter'] : '';  echo ($searchFilter == 'id_hoc_sinh'); ?>>ID Học sinh</option>
-                        <option value="ngay_sinh" <?php $searchFilter = isset($_POST['searchFilter']) ? $_POST['searchFilter'] : ''; echo ($searchFilter == 'Ngày sinh');?>>Ngày sinh</option>
-                        <option value="gioi_tinh" <?php $searchFilter = isset($_POST['searchFilter']) ? $_POST['searchFilter'] : ''; echo ($searchFilter == 'Ngày sinh');?>>Giới tính</option>
+                    <select id="searchFilter" name="searchFilter">
+                        <option style="color: gray">--Chọn--</option>
+                        <option value="ten_hoc_sinh" <?php echo (isset($_POST['searchFilter']) && $_POST['searchFilter'] == 'ten_hoc_sinh') ? 'selected' : ''; ?>>Tên học sinh</option>
+                        <option value="id_hoc_sinh" <?php echo (isset($_POST['searchFilter']) && $_POST['searchFilter'] == 'id_hoc_sinh') ? 'selected' : ''; ?>>ID Học sinh</option>
+                        <option value="ngay_sinh" <?php echo (isset($_POST['searchFilter']) && $_POST['searchFilter'] == 'ngay_sinh') ? 'selected' : ''; ?>>Ngày sinh</option>
+                        <option value="gioi_tinh" <?php echo (isset($_POST['searchFilter']) && $_POST['searchFilter'] == 'gioi_tinh') ? 'selected' : ''; ?>>Giới tính</option>
                     </select>
                     <label for="search">Tìm kiếm:</label>
-                    <input type="text" id="search" name="search" class="search-input" value="<?php if(isset($_POST['search'])){echo $_POST['search'];};?>">
+                    <input type="text" id="search" name="search" class="search-input" value="<?php echo isset($_POST['search']) ? htmlspecialchars($_POST['search']) : ''; ?>">
                     <button type="submit" id="searchButton">Tìm kiếm</button>
                 </form>
             </div> 
-            <!-- <div class="col-md-6">
-                <a>Hiển thị</a>
-                <select>
-
-                </select>
-                <a>kết quả trên một trang</a>
-            </div> -->
-            
             <div class="col-md-3">
-                <form method="post" class="">
-                    <button>Thêm học sinh</button>
+                <form method="post" id="insert">
+                <button><a href="/PHP/BTL/php/teacher/insert_student.php">Thêm học sinh</a></button>
                 </form>
             </div>
         </div>
@@ -111,18 +104,22 @@
 
         <?php
             $user_name = $_SESSION['user_name'];
-            $searchFilter = isset($_POST['searchFilter']) ? $_POST['searchFilter'] : '';
-            $searchValue = isset($_POST['search']) ? $_POST['search'] : '';
-
-
-            
+            if(isset($_POST['searchFilter'])){
+                $searchFilter = $_POST['searchFilter'];
+            }else{
+                $searchFilter = '';
+            }
+            if(isset($_POST['search'])){
+                $searchValue = $_POST['search'];
+            }else{
+                $searchValue = '';
+            }
             // Đưa ra id lớp giáo viên phụ trách
-            $sql_name = "SELECT users.*, giao_vien.* FROM users LEFT JOIN giao_vien ON SOUNDEX(users.fullname) = SOUNDEX(giao_vien.ten_giao_vien) WHERE users.user_name = '$user_name'";
+            $sql_name = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
             $result_name = $conn->query($sql_name);
             $row = $result_name->fetch_assoc();
             $id_class = $row['lop_phu_trach'];
-            $sql = "SELECT * FROM hoc_sinh WHERE id_lop LIKE '%$id_class%'";
-
+            $sql = "SELECT * FROM hoc_sinh WHERE id_lop ='$id_class'";
             if (!empty($searchValue)) {
                 switch ($searchFilter) {
                     case 'ten_hoc_sinh':
@@ -133,7 +130,7 @@
                         break;
                     case 'ngay_sinh':
                         $sql .= " AND (ngay_sinh_hs LIKE '%$searchValue%' 
-                            OR DATE_FORMAT(ngay_sinh_hs, '%d/%m/%Y') LIKE '%$searchValue%'
+                            OR DATE_FORMAT(ngay_sinh_hs, '%d/%m/%Y') LIKE '%$searchValue%' OR DATE_FORMAT(ngay_sinh_hs, '%d-%m-%Y') LIKE '%$searchValue%'
                             OR DATE_FORMAT(ngay_sinh_hs, '%Y-%m-%d') LIKE '%$searchValue%')";
                         break;
                     case 'gioi_tinh':
@@ -141,9 +138,10 @@
                 }
             }
             $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
+            if ($result->num_rows >0) {
                 echo "<table id='studentTable' class='my-table' border='2'>
                     <tr style='text-align:center'>
+                        <th>#</th>
                         <th>ID Lớp</th>
                         <th>ID Học sinh</th>
                         <th>Họ tên</th>
@@ -153,9 +151,15 @@
                         <th>Thao tác</th>
                     </tr>";
                 $i = 0;
-                while ($row = $result->fetch_assoc()) {
-                    $class = ($i % 2 == 0) ? 'even-row' : 'odd-row';
+                while ($i<$result->num_rows) {
+                    $row = $result->fetch_assoc();
+                    if ($i % 2 == 0) {
+                        $class = 'even-row';
+                    } else {
+                        $class = 'odd-row';
+                    }                    
                     echo "<tr class='$class'>
+                            <td>". $i+1 ."</td>
                             <td>".$row["id_lop"]."</td>
                             <td>".$row["id_hoc_sinh"]."</td>
                             <td>".$row["ten_hoc_sinh"]."</td>
@@ -163,21 +167,21 @@
                             <td>".$row["gioi_tinh"]."</td>
                             <td>".$row["nam_hoc"]."</td>
                             <td style='width:20%'>";
-                                if($position === 'Giáo viên') {
-                                    echo "<a href='/PHP/BTL/php/teacher/list_class.php' style='margin-right:10px'><img src='/PHP/BTL/images/account.png' style='width:20%'></a>";
-                                    echo "<a href='/PHP/BTL/php/teacher/list_class.php' style='margin-right:10px'><img src='/PHP/BTL/images/account.png' style='width:20%'></a>";
-                                    echo "<a href='/PHP/BTL/php/teacher/list_class.php'><img src='/PHP/BTL/images/account.png' style='width:20%'></a>";
-                                };
-                            "</td>";
-                        "</tr>";
-                $i++;
+                                if ($position === 'Giáo viên') {
+                                    echo "<a href='/PHP/BTL/php/teacher/edit_student.php?id_hoc_sinh=" . $row["id_hoc_sinh"] . "&ten_hoc_sinh=" . $row["ten_hoc_sinh"] . "&ngay_sinh_hoc_sinh=" . $row["ngay_sinh_hs"] . "' style='margin-right:10px' title='Chỉnh sửa'><img src='/PHP/BTL/images/edit.png' style='width:20%'></a>";
+                                    echo "<a href='/PHP/BTL/php/teacher/delete_student.php?id_hoc_sinh=" . $row["id_hoc_sinh"] . "' style='margin-right:10px' title='Xóa'><img src='/PHP/BTL/images/delete.png' style='width:20%'></a>";
+                                    echo "<a href='/PHP/BTL/php/teacher/info_student.php?id_hoc_sinh=" . $row["id_hoc_sinh"] . "' title='Xem thông tin đầy đủ'><img src='/PHP/BTL/images/full_info.png' style='width:20%'></a>";
+                                }
+                        echo "</td>
+                        </tr>";
+                    $i++;
                 }
+                echo '</table>';
             } else {
+                echo '<table id="studentTable" class="my-table" border="2">';
                 echo "<tr><td>Không tìm thấy kết quả.</td></tr>";
+                echo '</table>';
             }
-
-            echo '</table>';
-
             $conn->close();
         ?>
     </div>
