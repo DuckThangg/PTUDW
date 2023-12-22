@@ -26,7 +26,7 @@
             
         }
         if(isset($_SESSION['user_name'])){
-            require '/PHP/BTL/php/connect.php';
+            require './php/connect.php';
             $user_name = $_SESSION['user_name'];
             $sql = "SELECT *FROM users WHERE user_name = '$user_name' ";
             $result = $conn->query($sql);

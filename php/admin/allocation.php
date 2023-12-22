@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/allocation.css">
+    <link rel="stylesheet" href="../../css/allocation.css">
 
     <title>Document</title>
 </head>
@@ -26,7 +26,7 @@
 
     <div class="table">
     <?php
-        require 'connect.php';
+        require '../connect.php';
         mysqli_set_charset($conn, 'UTF8');
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id_lop']) && isset($_POST['update_teacher'])) {

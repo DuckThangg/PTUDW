@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/teachers.css">
+    <link rel="stylesheet" href="../../css/teachers.css">
     <title>Document</title>
 
 </head>
@@ -25,7 +25,7 @@
     </header>
 
     <?php
-        require 'connect.php';
+        require '../connect.php';
         
         mysqli_set_charset($conn, 'UTF8');
         session_start();
@@ -57,7 +57,7 @@
     
         <div class="table">
         <?php
-            require 'connect.php';
+            require '../connect.php';
             mysqli_set_charset($conn, 'UTF8');
             $sql = "SELECT * FROM giao_vien";
 

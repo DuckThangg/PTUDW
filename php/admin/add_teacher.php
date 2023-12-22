@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/list_class.css">
+    <link rel="stylesheet" href="../../css/list_class.css">
     <title>Document</title>
 </head>
 <body>
@@ -52,7 +52,7 @@
         
     <?php
         if (isset($_GET['id_giao_vien'])) {
-            require "connect.php";
+            require "../connect.php";
             mysqli_set_charset($conn, 'UTF8');
 
             $id_giao_vien = $_GET['id_giao_vien'];

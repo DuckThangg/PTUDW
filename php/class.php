@@ -43,9 +43,9 @@
 
                 if ($position === 'ADMIN') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/allocation.php'>Phân bổ giáo viên phụ trách </a></button>";
-                    echo "<button><a href='/PHP/BTL/php/add_class.php'>Mở thêm lớp học</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/change_class.php'>Thay đổi thông tin lớp học</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/admin/allocation.php'>Phân bổ giáo viên phụ trách </a></button>";
+                    echo "<button><a href='/PHP/BTL/php/admin/add_class.php'>Mở thêm lớp học</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/admin/change_class.php'>Thay đổi thông tin lớp học</a></button>";
                 } elseif ($position === 'Giáo viên') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Đăng kí mở lớp</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
