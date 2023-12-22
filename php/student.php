@@ -42,11 +42,11 @@
 
                 if ($position === 'ADMIN') {
                     echo "<button><a href='/PHP/BTL/php/admin/add_student.php'>Thêm học sinh</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/admin/list_class.php'>Cập nhật thông tin</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/admin/change_student.php'>Cập nhật thông tin</a></button>";
                     echo "<button><a href='/PHP/BTL/php/admin/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
                 } elseif ($position === 'Giáo viên') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Thêm sửa xóa học sinh</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Cập nhật thông tin</a></button>";
+                    echo "<button><a href='/PHP/BTL/php/change_student.php'>Cập nhật thông tin</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
                 } elseif ($position === 'Phụ huynh') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Cập nhật thông tin</a></button>";

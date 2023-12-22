@@ -9,7 +9,7 @@
 <body>
     <header>
         <div>
-            <a href="/PHP/BTL/index.php"> <img  src="../images/icon-2.png" alt=""> </a>
+            <a href="/PHP/BTL/index.php"> <img  src="../../images/icon-2.png" alt=""> </a>
         </div>
 
         <div>
