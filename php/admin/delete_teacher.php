@@ -101,22 +101,36 @@
 
     <?php
 
-    if (isset($_POST['submit'])) {
-        if (!empty($_POST['delete'])) {
-            foreach ($_POST['delete'] as $deleteId) {
-                $deleteId = (int)$deleteId; // Chuyển đổi ID sang kiểu số nguyên để tránh tấn công SQL injection
+        if (isset($_POST['submit'])) {
+            if (!empty($_POST['delete'])) {
+                foreach ($_POST['delete'] as $deleteId) {
+                    $update3 = "UPDATE lop SET gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+                    if ($conn->query($update3) !== TRUE) {
+                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
+                    }
+                    $update1 = "UPDATE lop SET id_gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+                    if ($conn->query($update1) !== TRUE) {
+                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
+                    }
+                    
+                
+                    $update2 = "UPDATE lop_phu_trach SET id_giao_vien = NULL WHERE id_giao_vien = '$deleteId'";
+                    if ($conn->query($update2) !== TRUE) {
+                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
+                    }
 
-                $sql = "DELETE FROM giao_vien WHERE id_giao_vien = $deleteId"; // Query xóa dữ liệu từ CSDL
-                if ($conn->query($sql) !== TRUE) {
-                    echo "Lỗi khi xóa bản ghi: " . $conn->error;
+                
+                    $sql = "DELETE FROM giao_vien WHERE id_giao_vien = '$deleteId'"; // Query xóa dữ liệu từ CSDL
+                    if ($conn->query($sql) !== TRUE) {
+                        echo "Lỗi khi xóa bản ghi: " . $conn->error;
+                    }
                 }
+                echo "Xóa thành công!";
+            } else {
+                echo "Vui lòng chọn ít nhất một bản ghi để xóa.";
             }
-            echo "Xóa thành công!";
-        } else {
-            echo "Vui lòng chọn ít nhất một bản ghi để xóa.";
         }
-    }
-    $conn->close();
+        $conn->close();
     ?>
 
 

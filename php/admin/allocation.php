@@ -53,6 +53,10 @@
                         $sql_update_gv_phu_trach = "UPDATE lop SET gv_phu_trach = '$teacher_name' WHERE id_lop = '$id_lop'";
                         if ($conn->query($sql_update_gv_phu_trach) === TRUE) {
                             echo "<p>Cập nhật giáo viên phụ trách thành công!</p>";
+                            $update_lop_phu_trach= "UPDATE lop_phu_trach
+                            JOIN lop ON lop_phu_trach.id_lop = lop.id_lop
+                            SET lop_phu_trach.id_giao_vien = lop.id_gv_phu_trach;";
+                            $conn->query($update_lop_phu_trach);
                         } else {
                             echo "Lỗi khi cập nhật giáo viên phụ trách: " . $conn->error;
                         }

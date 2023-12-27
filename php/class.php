@@ -62,6 +62,13 @@
     <?php
         require 'connect.php';
         mysqli_set_charset($conn, 'UTF8');
+
+        $update = "UPDATE lop
+        JOIN giao_vien ON lop.id_gv_phu_trach = giao_vien.id_giao_vien
+        SET lop.gv_phu_trach = giao_vien.ten_giao_vien;
+        ";
+        $result= $conn->query($update);
+
         $sql = "SELECT * FROM lop";
 
         $result= $conn->query($sql);

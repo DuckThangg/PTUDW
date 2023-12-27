@@ -108,7 +108,7 @@
 
         
             $sql = "UPDATE giao_vien SET ten_giao_vien = '$ten_giao_vien', ngay_sinh_gv = '$ngay_sinh_gv', gioi_tinh_gv ='$gioi_tinh_gv', dien_thoai_gv ='$dien_thoai_gv' WHERE id_giao_vien = '$id_giao_vien'";
-        
+            
             if ($conn->query($sql) === TRUE) {
                 echo "<h2 style ='text-align:center; color:white; margin: 50px 0'>Cập nhật thông tin giáo viên thành công</h2>";
             } else {
