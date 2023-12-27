@@ -6,17 +6,6 @@
     <link rel="stylesheet" href="../css/bootstrap.css">
     <link rel="stylesheet" href="../css/index.css">
     <title>Đăng nhập</title>
-    <style>
-        .container{
-            margin: 150px auto;
-            background-color: #c2f4c2;
-            text-align:center;
-            padding: 50px;
-            width: 60%;
-            border-radius:10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-        }
-    </style>
 </head>
 <body>
     <header>
