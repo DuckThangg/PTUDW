@@ -59,7 +59,7 @@
         <?php
             require '../connect.php';
             mysqli_set_charset($conn, 'UTF8');
-            $sql = "SELECT * FROM phieu_dan_ki";
+            $sql = "SELECT * FROM phieu_dang_ky";
 
             $result= $conn->query($sql);
 
@@ -74,7 +74,7 @@
                             <th>Loại lớp đăng kí</th>
                             <th>Tên phụ huynh</th>
                             <th>Số điện thoại</th>
-                            <th>Năm học/th>
+                            <th>Năm học</th>
                             <th>Duyệt</th>
                         </tr>";
 
@@ -86,12 +86,12 @@
                             <td>".$row["ten_hoc_sinh"]."</td>
                             <td>".$row["ngay_sinh_hs"]."</td>
                             <td>".$row["gioi_tinh_hs"]."</td>
-                            <td>".$row["dia_chi"]."</td>
-                            <td>".$row["loai_lop_dang_ki"]."</td>
+                            <td>".$row["dia_chi_hs"]."</td>
+                            <td>".$row["loai_lop_dang_ky"]."</td>
                             <td>".$row["ten_phu_huynh"]."</td>
                             <td>".$row["dien_thoai_phu_huynh"]."</td>
                             <td>".$row["nam_hoc"]."</td>
-                            <td><input type='checkbox' name='approve' value='".$row["id_phieu"]."'></td>
+                            <td><input type='checkbox' name='approve[]' value='".$row["id_phieu"]."'></td>
                         </tr>";
                     $i++;
                 }
@@ -106,38 +106,46 @@
     </form>
 
     <?php
-
+        require '../connect.php';
+        mysqli_set_charset($conn, 'UTF8');
+                
+        // Kiểm tra nút submit được nhấn
         if (isset($_POST['submit'])) {
-            if (!empty($_POST['approve'])) {
+            // Kiểm tra xem 'approve' có tồn tại và là mảng không
+            if (isset($_POST['approve']) && is_array($_POST['approve']) && !empty($_POST['approve'])) {
                 foreach ($_POST['approve'] as $approveId) {
-                    $update3 = "UPDATE lop SET gv_phu_trach = NULL WHERE id_gv_phu_trach = '$approveId'";
-                    if ($conn->query($update3) !== TRUE) {
-                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
-                    }
-                    $update1 = "UPDATE lop SET id_gv_phu_trach = NULL WHERE id_gv_phu_trach = '$approveId'";
-                    if ($conn->query($update1) !== TRUE) {
-                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
-                    }
+                    $sql_select = "SELECT * FROM phieu_dang_ky WHERE id_phieu = '$approveId'";
+                    $result = $conn->query($sql_select);
+                
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
                     
-                
-                    $update2 = "UPDATE lop_phu_trach SET id_giao_vien = NULL WHERE id_giao_vien = '$approveId'";
-                    if ($conn->query($update2) !== TRUE) {
-                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
-                    }
+                        // Thêm dữ liệu của học sinh vào bảng hoc_sinh
+                        $sql_insert_hoc_sinh = "INSERT INTO hoc_sinh (id_hoc_sinh, ten_hoc_sinh, ngay_sinh_hs, gioi_tinh, nam_hoc)
+                                                VALUES ('HS".$row["id_phieu"]."', '".$row["ten_hoc_sinh"]."', '".$row["ngay_sinh_hs"]."', '".$row["gioi_tinh_hs"]."', '".$row["nam_hoc"]."')";
+                        $conn->query($sql_insert_hoc_sinh);
+                    
+                        // Thêm dữ liệu của phụ huynh vào bảng phu_huynh
+                        $sql_insert_phu_huynh = "INSERT INTO phu_huynh (id_phu_huynh, ten_phu_huynh, dien_thoai_ph)
+                                                VALUES ('PH".$row["id_phieu"]."', '".$row["ten_phu_huynh"]."', '".$row["dien_thoai_phu_huynh"]."')";
+                        $conn->query($sql_insert_phu_huynh);
 
-                
-                    $sql = "approve FROM giao_vien WHERE id_giao_vien = '$approveId'"; // Query xóa dữ liệu từ CSDL
-                    if ($conn->query($sql) !== TRUE) {
-                        echo "Lỗi khi xóa bản ghi: " . $conn->error;
+                        // Thêm dữ liệu của phụ huynh vào bảng lich_su_dang_ki
+                        $sql_insert_lich_su = "INSERT INTO lich_su_dang_ki (id_phieu,ten_hoc_sinh, ngay_sinh_hs, gioi_tinh_hs, dia_chi_hs, loai_lop_dang_ky, ten_phu_huynh, dien_thoai_phu_huynh, nam_hoc)
+                                           VALUES ('".$row["id_phieu"]."','".$row["ten_hoc_sinh"]."', '".$row["ngay_sinh_hs"]."', '".$row["gioi_tinh_hs"]."', '".$row["dia_chi_hs"]."', '".$row["loai_lop_dang_ky"]."', '".$row["ten_phu_huynh"]."', '".$row["dien_thoai_phu_huynh"]."', '".$row["nam_hoc"]."')";
+                        $conn->query($sql_insert_lich_su);
+
+                    // Xóa dữ liệu từ bảng phieu_dang_ky
+                        $sql_delete = "DELETE FROM phieu_dang_ky WHERE id_phieu = '$approveId'";
+                        $conn->query($sql_delete);
                     }
                 }
-                echo "Xóa thành công!";
+                echo "Thêm dữ liệu thành công!";
             } else {
-                echo "Vui lòng chọn ít nhất một bản ghi để xóa.";
+                echo "Vui lòng chọn ít nhất một bản ghi để thêm.";
             }
         }
-        $conn->close();
-    ?>
+?>
 
 
 </body>
