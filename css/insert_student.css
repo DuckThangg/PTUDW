@@ -139,3 +139,15 @@ h2{
 .back{
     text-align: left;
 }
+.none{
+    margin: 10px auto;
+    background-color: #f4ddc2;
+    text-align:center;
+    padding: 20px;
+    width: 40%;
+    border-radius:10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+}
+.none h3{
+    margin: 0px;
+}
