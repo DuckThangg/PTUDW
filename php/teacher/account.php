@@ -14,7 +14,7 @@
         <div>
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
-<<<<<<< HEAD
+        
         <?php
             require "connect.php";
             mysqli_set_charset($conn, 'UTF8');
