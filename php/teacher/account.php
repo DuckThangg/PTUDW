@@ -7,93 +7,6 @@
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="/PHP/BTL/css/teachers.css">
     <title>Tài khoản</title>
-    <style>
-        h3 {
-            margin: 0px 20px 10px 20px;
-            text-align:center;
-            font-size: 32px;
-        }
-
-        .row {
-            margin: auto;
-        }
-
-        .row .col-md-3 {
-            background-color: white;
-            text-align: center;
-            border-radius: 5px;
-            margin-right: 10px;
-            vertical-align: middle;
-        }
-
-        .row .col-md-9 {
-            width: 73.67%;
-            border-radius: 5px;
-            background-color: #d3f5e0;
-            text-align: center;
-        }
-
-        img {
-            width: 70%;
-        }
-
-        button {
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #51ba54;
-            color: white;
-            border: none;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        button a {
-            color: white;
-        }
-
-        button:hover a {
-            color: white;
-        }
-
-        .head {
-            border-bottom: 1px solid #c9cacc;
-            margin-bottom: 10px;
-            max-width: 100%;
-            padding: 0px 15px 0px 15px;
-            text-align:left;
-        }
-
-        .head a {
-            border-bottom: 3px solid #0f75bc;
-            color: #024da1;
-            font-size: 18px;
-            line-height: 41px;
-            padding: 5px 0 10px;
-            text-decoration: none;
-            margin-right:10px;
-        }
-
-        .info {
-            background-color: white;
-        }
-
-        p {
-            margin: 10px
-        }
-
-        .edit-section {
-            display: none;
-        }
-        h4{
-            margin: 20px 0px;
-        }
-    </style>
-
 </head>
 
 <body>
@@ -101,25 +14,37 @@
         <div>
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
-
-        <div>
-            <ul>
-                <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                <li><a href=''>Phụ huynh</a></li>
-                <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-            </ul>
-        </div>
+        <?php
+            require "connect.php";
+            mysqli_set_charset($conn, 'UTF8');
+            session_start();
+            $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
+            
+            if (isset($_SESSION['user_name'])){
+        ?>
+            <div>
+                <ul>
+                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
+                    <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                </ul>
+            </div>
+        <?php
+            }else{
+        ?>
+            <div>
+                <ul>
+                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
+                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
+                </ul>
+            </div>
+        <?php 
+            }
+        ?>
     </header>
-
-    <?php
-        //Connect tới database
-        require 'connect.php';
-        mysqli_set_charset($conn, 'UTF8');
-        session_start();
-        $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-    ?>
 
     <div class="table">
         <h3>Chi tiết tài khoản</h3>
@@ -129,13 +54,15 @@
                     <img src="/PHP/BTL/images/account.png" alt="account">
                     <p>
                         <?php
-                            //Hiển thị họ tên giáo viên
-                            $user_name = $_SESSION['user_name'];
-                            $sql_name = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
-                            $result= $conn->query($sql_name);
-                            if($result->num_rows > 0){
-                                $row = $result->fetch_assoc();
-                                echo "<h4>". $row['ten_giao_vien'] . "</h4>";
+                            if (isset($_SESSION['user_name'])){
+                                //Hiển thị họ tên giáo viên
+                                $user_name = $_SESSION['user_name'];
+                                $sql_name = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
+                                $result= $conn->query($sql_name);
+                                if($result->num_rows > 0){
+                                    $row = $result->fetch_assoc();
+                                    echo "<h4>". $row['ten_giao_vien'] . "</h4>";
+                                }
                             }
                             else{
                                 echo "<h4>" . "Không có thông tin để hiển thị" . "</h4>";
@@ -179,26 +106,33 @@
                                     <p>Điện thoại</p>
                                 </div>
                                 <div class="col-md-8" style="text-align:left">
-                                    <?php
+                                <?php
+                                    if (isset($_SESSION['user_name'])){
                                         $user_name = $_SESSION['user_name'];
-                                        $sql = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
-                                        $result= $conn->query($sql);
-                                        if($result->num_rows > 0){
-                                            $i = 0;
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<p>" . ($row["lop_phu_trach"] ?? "Không có") . "</p>";
-                                                echo "<p>" . ($row["ten_giao_vien"] ?? "Không có") . "</p>";
-                                                echo "<p>" . ($row["id_giao_vien"] ?? "Không có") . "</p>";
-                                                echo "<p>" . ($row["gioi_tinh_gv"] ?? "Không có") . "</p>";
-                                                echo "<p>" . ($row["ngay_sinh_gv"] ?? "Không có") . "</p>";
-                                                echo "<p>" . ($row["dien_thoai_gv"] ?? "Không có") . "</p>";
-                                                $i++;
-                                            }
-                                        }
-                                        else{
-                                            echo "Không có thông tin hiển thị";
-                                        }
-                                    ?>
+                                        $sql = "SELECT * FROM giao_vien WHERE id_giao_vien = '$user_name'";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc();
+
+                                            $name = $row["ten_giao_vien"];
+                                            $id_lop = $row["lop_phu_trach"];
+                                            $id_gv = $row["id_giao_vien"];
+                                            $gender = $row["gioi_tinh_gv"];
+                                            $ns = $row["ngay_sinh_gv"];
+                                            $sdt = $row["dien_thoai_gv"];
+
+                                            echo "<p>" . ($id_lop ?? "Không có") . "</p>";
+                                            echo "<p>" . ($name ?? "Không có") . "</p>";
+                                            echo "<p>" . ($id_gv ?? "Không có") . "</p>";
+                                            echo "<p>" . ($gender ?? "Không có") . "</p>";
+                                            echo "<p>" . ($ns ?? "Không có") . "</p>";
+                                            echo "<p>" . ($sdt ?? "Không có") . "</p>";
+                                        } 
+                                    }else {
+                                        echo "<p>Không có thông tin hiển thị</p>";
+                                    }
+                                ?>
                                 </div>
                             </div>
                         </div>
@@ -210,14 +144,14 @@
                             <div class="row" style="text-align:left">
                                 <div class="col-md-6">
                                     <label for="newName">Tên giáo viên:</label>
-                                    <input type="text" id="newName" name="newName"><br>
+                                    <input type="text" id="newName" name="newName" value="<?php echo $name;?>"><br>
                                     <br>
                                     <label for="newPhone">Số điện thoại:</label>
-                                    <input type="number" id="newPhone" name="newPhone"><br>
+                                    <input type="number" id="newPhone" name="newPhone" value="<?php echo $sdt;?>"><br>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="newPhone">Ngày sinh:</label>
-                                    <input type="Date" id="newDate" name="newDate"><br>
+                                    <input type="Date" id="newDate" name="newDate" value="<?php echo $ns;?>"><br>
                                     <br>
                                     <label for="newGender">Giới tính:</label>
                                     <select id="newGender" name="newGender">

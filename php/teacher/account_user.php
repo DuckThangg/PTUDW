@@ -1,153 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
-        <link rel="stylesheet" href="/PHP/BTL/css/teachers.css">
-        <title>Tài khoản</title>
-        <style>
-            h3 {
-                margin: 0px 20px 10px 20px;
-                text-align:center;
-                font-size: 32px;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
+    <link rel="stylesheet" href="/PHP/BTL/css/teachers.css">
+    <title>Tài khoản</title>
+    <style>
+        h3 {
+            margin: 0px 20px 10px 20px;
+            text-align:center;
+            font-size: 32px;
+        }
 
-            .row {
-                margin: auto;
-            }
+        .row {
+            margin: auto;
+        }
 
-            .row .col-md-3 {
-                background-color: white;
-                text-align: center;
-                border-radius: 5px;
-                margin-right: 10px;
-                vertical-align: middle;
-            }
+        .row .col-md-3 {
+            background-color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
 
-            .row .col-md-9 {
-                width: 73.67%;
-                border-radius: 5px;
-                background-color: #d3f5e0;
-                text-align: center;
-            }
+        .row .col-md-9 {
+            width: 73.67%;
+            border-radius: 5px;
+            background-color: #d3f5e0;
+            text-align: center;
+        }
 
-            img {
-                width: 70%;
-            }
+        img {
+            width: 70%;
+        }
 
-            button {
-                border-radius: 10px;
-                padding:8px;
-                font-size: 16px;
-                background-color: #51ba54;
-                color: white;
-                border: none;
-                text-decoration: none;
-                cursor: pointer;
-            }
+        button {
+            border-radius: 10px;
+            padding:8px;
+            font-size: 16px;
+            background-color: #51ba54;
+            color: white;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-            button:hover {
-                background-color: #45a049;
-            }
+        button:hover {
+            background-color: #45a049;
+        }
 
-            button a {
-                color: white;
-            }
+        button a {
+            color: white;
+        }
 
-            button:hover a {
-                color: white;
-            }
+        button:hover a {
+            color: white;
+        }
 
-            .head {
-                border-bottom: 1px solid #c9cacc;
-                margin-bottom: 10px;
-                max-width: 100%;
-                padding: 0px 15px 0px 15px;
-                text-align:left;
-            }
+        .head {
+            border-bottom: 1px solid #c9cacc;
+            margin-bottom: 10px;
+            max-width: 100%;
+            padding: 0px 15px 0px 15px;
+            text-align:left;
+        }
 
-            .head a {
-                border-bottom: 3px solid #0f75bc;
-                color: #024da1;
-                font-size: 18px;
-                line-height: 41px;
-                padding: 5px 0 10px;
-                text-decoration: none;
-                margin-right:10px;
-            }
+        .head a {
+            border-bottom: 3px solid #0f75bc;
+            color: #024da1;
+            font-size: 18px;
+            line-height: 41px;
+            padding: 5px 0 10px;
+            text-decoration: none;
+            margin-right:10px;
+        }
 
-            .info {
-                background-color: white;
-            }
+        .info {
+            background-color: white;
+        }
 
-            p {
-                margin: 10px
-            }
+        p {
+            margin: 10px
+        }
 
-            .edit-section {
-                display: none;
-            }
-            h4{
-                margin: 20px 0px;
-            }
-            input{
-                padding: 5px;
-            }
-            .col-md-6{
-                text-align:left;
-                margin-bottom:10px;
-                padding: 0px;
+        .edit-section {
+            display: none;
+        }
+        h4{
+            margin: 20px 0px;
+        }
+        input{
+            padding: 5px;
+        }
+        .col-md-6{
+            text-align:left;
+            margin-bottom:10px;
+            padding: 0px;
 
-            }
-        </style>
+        }
+    </style>
 
-    </head>
+</head>
 
-    <body>
-        <header>
-            <div>
-                <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
-            </div>
-
+<body>
+    <header>
+        <div>
+            <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
+        </div>
+        <?php
+            require "connect.php";
+            mysqli_set_charset($conn, 'UTF8');
+            session_start();
+            if (isset($_SESSION['user_name'])){
+        ?>
             <div>
                 <ul>
                     <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
                     <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href=''>Phụ huynh</a></li>
                     <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
                     <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                 </ul>
             </div>
-        </header>
-
         <?php
-            //Connect tới database
-            require 'connect.php';
-            mysqli_set_charset($conn, 'UTF8');
-            session_start();
-            $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
+            }else{
         ?>
+            <div>
+                <ul>
+                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
+                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
+                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
+                </ul>
+            </div>
+        <?php 
+            }
+        ?>
+    </header>
 
-        <div class="table">
-            <h3>Chi tiết tài khoản</h3>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="/PHP/BTL/images/account.png" alt="account">
+    <div class="table">
+        <h3>Chi tiết tài khoản</h3>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="/PHP/BTL/images/account.png" alt="account">
                     <p>
                         <?php
-                            //Hiển thị họ tên giáo viên
-                            $user_name = $_SESSION['user_name'];
-                            $sql_name = "SELECT * FROM giao_vien WHERE id_giao_vien = '$user_name'";
-                            $result= $conn->query($sql_name);
-                            if($result->num_rows > 0){
-                                $row = $result->fetch_assoc();
-                                echo "<h4>". $row['ten_giao_vien'] . "</h4>";
-                            }
-                            else{
-                                echo "Không có thông tin để hiển thị";
+                            if (isset($_SESSION['user_name'])){
+                                //Hiển thị họ tên giáo viên
+                                $user_name = $_SESSION['user_name'];
+                                $sql_name = "SELECT * FROM giao_vien WHERE id_giao_vien = '$user_name'";
+                                $result= $conn->query($sql_name);
+                                if($result->num_rows > 0){
+                                    $row = $result->fetch_assoc();
+                                    echo "<h4>". $row['ten_giao_vien'] . "</h4>";
+                                }
+                            }else{
+                                echo "<h4>" . "Không có thông tin để hiển thị" ."</h4>";
                             }
                         ?>
                     </p>
@@ -183,9 +194,9 @@
                                                     $i++;
                                                 }
                                             }
-                                            else{
-                                                echo "Không có thông tin hiển thị";
-                                            }
+                                        }
+                                        else{
+                                            echo "<p>Không có thông tin hiển thị</p>";
                                         }
                                     ?>
                                 </div>
@@ -242,7 +253,8 @@
             e.preventDefault(); 
         document.getElementById('editSection').style.display = 'block';
     });
-    </script>
+</script>
 
 </body>
+
 </html>
