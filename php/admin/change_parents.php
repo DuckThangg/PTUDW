@@ -26,32 +26,30 @@
     <?php
         require '../connect.php';
         mysqli_set_charset($conn, 'UTF8');
-        $sql = "SELECT * FROM giao_vien";
+        $sql = "SELECT * FROM phu_huynh";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             echo "<table class='my-table' border='2'>
                     <tr>
-                        <th>ID giáo viên</th>
-                        <th>Tên giáo viên</th>
+                        <th>ID Phụ huynh</th>
+                        <th>Tên Phụ huynh</th>
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
                         <th>Số điện thoại</th>
-                        <th>Lớp phụ trách</th>
                     </tr>";
         
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>" . $row["id_giao_vien"] . "</td>
-                        <td>" . $row["ten_giao_vien"] . "</td>
-                        <td>" . $row["ngay_sinh_gv"] . "</td>
-                        <td>" . $row["gioi_tinh_gv"] . "</td>
-                        <td>" . $row["dien_thoai_gv"] . "</td>
-                        <td>" . $row["lop_phu_trach"] . "</td>
+                        <td>" . $row["id_phu_huynh"] . "</td>
+                        <td>" . $row["ten_phu_huynh"] . "</td>
+                        <td>" . $row["ngay_sinh_ph"] . "</td>
+                        <td>" . $row["gioi_tinh_ph"] . "</td>
+                        <td>" . $row["dien_thoai_ph"] . "</td>
                         <td>
                             <form action='' method='get'>
-                                <input type='hidden' name='id_giao_vien' value='" . $row["id_giao_vien"] . "'>
+                                <input type='hidden' name='id_phu_huynh' value='" . $row["id_phu_huynh"] . "'>
                                 <input type='submit' value='Chỉnh sửa'>
                             </form>
                         </td>
@@ -65,11 +63,11 @@
     </div>
     <?php
         // Kiểm tra nếu id_lop được truyền vào từ trang danh sách
-        if (isset($_GET['id_giao_vien'])) {
-            $id_giao_vien = $_GET['id_giao_vien'];
+        if (isset($_GET['id_phu_huynh'])) {
+            $id_phu_huynh = $_GET['id_phu_huynh'];
         
-            // Lấy thông tin của dòng cần chỉnh sửa từ id_giao_vien
-            $sql = "SELECT * FROM giao_vien WHERE id_giao_vien = '$id_giao_vien'";
+            // Lấy thông tin của dòng cần chỉnh sửa từ id_phu_huynh
+            $sql = "SELECT * FROM phu_huynh WHERE id_phu_huynh = '$id_phu_huynh'";
             $result = $conn->query($sql);
         
             if ($result->num_rows == 1) {
@@ -78,16 +76,16 @@
     ?>
 
     <form class="change_class" action="" method="post">
-        <h1 style = "text-align:center">Chỉnh sửa thông tin giáo viên</h1>
-        <input type="hidden" name="id_giao_vien" value="<?php echo $row['id_giao_vien']; ?>">
-        <label for="ten_giao_vien">Tên giáo viên</label>
-        <input type="text" id="ten_giao_vien" name="ten_giao_vien" value="<?php echo $row['ten_giao_vien']; ?>"><br><br>
-        <label for="ngay_sinh_gv">Ngày sinh:</label>
-        <input type="text" id="ngay_sinh_gv" name="ngay_sinh_gv" value="<?php echo $row['ngay_sinh_gv']; ?>"><br><br>
-        <label for="gioi_tinh_gv">Giới tính:</label>
-        <input type="text" id="gioi_tinh_gv" name="gioi_tinh_gv" value="<?php echo $row['gioi_tinh_gv']; ?>"><br><br>
-        <label for="dien_thoai_gv">Điện thoại:</label>
-        <input type="text" id="dien_thoai_gv" name="dien_thoai_gv" value="<?php echo $row['dien_thoai_gv']; ?>"><br><br>
+        <h1 style = "text-align:center">Chỉnh sửa thông tin phụ huynh</h1>
+        <input type="hidden" name="id_phu_huynh" value="<?php echo $row['id_phu_huynh']; ?>">
+        <label for="ten_phu_huynh">Tên phụ huynh</label>
+        <input type="text" id="ten_phu_huynh" name="ten_phu_huynh" value="<?php echo $row['ten_phu_huynh']; ?>"><br><br>
+        <label for="ngay_sinh_ph">Ngày sinh:</label>
+        <input type="text" id="ngay_sinh_ph" name="ngay_sinh_ph" value="<?php echo $row['ngay_sinh_ph']; ?>"><br><br>
+        <label for="gioi_tinh_ph">Giới tính:</label>
+        <input type="text" id="gioi_tinh_ph" name="gioi_tinh_ph" value="<?php echo $row['gioi_tinh_ph']; ?>"><br><br>
+        <label for="dien_thoai_ph">Điện thoại:</label>
+        <input type="text" id="dien_thoai_ph" name="dien_thoai_ph" value="<?php echo $row['dien_thoai_ph']; ?>"><br><br>
         <input type="submit" value="Lưu thay đổi">
     </form>
 
@@ -100,14 +98,14 @@
     ?>
 
     <?php
-        if (isset($_POST['id_giao_vien'])) {
-            $ten_giao_vien = $_POST['ten_giao_vien'];
-            $ngay_sinh_gv = $_POST['ngay_sinh_gv'];
-            $gioi_tinh_gv = $_POST['gioi_tinh_gv'];
-            $dien_thoai_gv = $_POST['dien_thoai_gv'];
+        if (isset($_POST['id_phu_huynh'])) {
+            $ten_phu_huynh = $_POST['ten_phu_huynh'];
+            $ngay_sinh_ph = $_POST['ngay_sinh_ph'];
+            $gioi_tinh_ph = $_POST['gioi_tinh_ph'];
+            $dien_thoai_ph = $_POST['dien_thoai_ph'];
 
         
-            $sql = "UPDATE giao_vien SET ten_giao_vien = '$ten_giao_vien', ngay_sinh_gv = '$ngay_sinh_gv', gioi_tinh_gv ='$gioi_tinh_gv', dien_thoai_gv ='$dien_thoai_gv' WHERE id_giao_vien = '$id_giao_vien'";
+            $sql = "UPDATE phu_huynh SET ten_phu_huynh = '$ten_phu_huynh', ngay_sinh_ph = '$ngay_sinh_ph', gioi_tinh_ph ='$gioi_tinh_ph', dien_thoai_ph ='$dien_thoai_ph' WHERE id_phu_huynh = '$id_phu_huynh'";
             
             if ($conn->query($sql) === TRUE) {
                 echo "<h2 style ='text-align:center; color:white; margin: 50px 0'>Cập nhật thông tin giáo viên thành công</h2>";
