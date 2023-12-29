@@ -59,19 +59,18 @@
         <?php
             require '../connect.php';
             mysqli_set_charset($conn, 'UTF8');
-            $sql = "SELECT * FROM giao_vien";
+            $sql = "SELECT * FROM phu_huynh";
 
             $result= $conn->query($sql);
 
             if($result->num_rows > 0){
                 echo "<table class='my-table' border='2'>
                         <tr>
-                            <th>ID giáo viên</th>
-                            <th>Tên giáo viên</th>
+                            <th>ID phụ huynh</th>
+                            <th>Tên phụ huynh</th>
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
                             <th>Số điện thoại</th>
-                            <th>Lớp phụ trách</th>
                             <th>Xóa</th>
                         </tr>";
 
@@ -79,13 +78,12 @@
                 while($row = $result->fetch_assoc()) {
                     $class = ($i % 2 == 0) ? 'even-row' : 'odd-row';
                     echo "<tr class='$class'>
-                            <td>".$row["id_giao_vien"]."</td>
-                            <td>".$row["ten_giao_vien"]."</td>
-                            <td>".$row["gioi_tinh_gv"]."</td>
-                            <td>".$row["ngay_sinh_gv"]."</td>
-                            <td>".$row["dien_thoai_gv"]."</td>
-                            <td>".$row["lop_phu_trach"]."</td>
-                            <td><input type='checkbox' name='delete[]' value='".$row["id_giao_vien"]."'></td>
+                            <td>".$row["id_phu_huynh"]."</td>
+                            <td>".$row["ten_phu_huynh"]."</td>
+                            <td>".$row["gioi_tinh_ph"]."</td>
+                            <td>".$row["ngay_sinh_ph"]."</td>
+                            <td>".$row["dien_thoai_ph"]."</td>
+                            <td><input type='checkbox' name='delete[]' value='".$row["id_phu_huynh"]."'></td>
                         </tr>";
                     $i++;
                 }
@@ -96,7 +94,7 @@
             }
         ?>
         </div>
-        <input style="padding:10px;font-size:15px;" type="submit" name="submit" value="Xóa giáo viên">
+        <input style="padding:10px;font-size:15px;" type="submit" name="submit" value="Xóa phụ huynh">
     </form>
 
     <?php
@@ -104,23 +102,16 @@
         if (isset($_POST['submit'])) {
             if (!empty($_POST['delete'])) {
                 foreach ($_POST['delete'] as $deleteId) {
-                    $update3 = "UPDATE lop SET gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+                    $update3 = "UPDATE giam_ho SET id_phu_huynh = NULL WHERE id_phu_huynh = '$deleteId'";
                     if ($conn->query($update3) !== TRUE) {
                         echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
                     }
-                    $update1 = "UPDATE lop SET id_gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+                    $update1 = "UPDATE giam_ho SET ten_phu_huynh = NULL WHERE id_phu_huynh = '$deleteId'";
                     if ($conn->query($update1) !== TRUE) {
                         echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
                     }
-                    
                 
-                    $update2 = "UPDATE lop_phu_trach SET id_giao_vien = NULL WHERE id_giao_vien = '$deleteId'";
-                    if ($conn->query($update2) !== TRUE) {
-                        echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
-                    }
-
-                
-                    $sql = "DELETE FROM giao_vien WHERE id_giao_vien = '$deleteId'"; // Query xóa dữ liệu từ CSDL
+                    $sql = "DELETE FROM phu_huynh WHERE id_phu_huynh = '$deleteId'"; // Query xóa dữ liệu từ CSDL
                     if ($conn->query($sql) !== TRUE) {
                         echo "Lỗi khi xóa bản ghi: " . $conn->error;
                     }

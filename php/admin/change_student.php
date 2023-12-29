@@ -17,7 +17,7 @@
                 <li><a href="/PHP/BTL/php/teacher.php">Giáo viên</a></li>
                 <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/student.php">Học sinh</a></li>
-                <li><a href="">Phụ huynh</a></li>
+                <li><a href="/PHP/BTL/php/parents.php">Phụ huynh</a></li>
                 <li><a href="">Đăng kí học</a></li>
             </ul>
         </div>

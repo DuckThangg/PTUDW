@@ -59,33 +59,39 @@
         <?php
             require '../connect.php';
             mysqli_set_charset($conn, 'UTF8');
-            $sql = "SELECT * FROM giao_vien";
+            $sql = "SELECT * FROM phieu_dan_ki";
 
             $result= $conn->query($sql);
 
             if($result->num_rows > 0){
                 echo "<table class='my-table' border='2'>
                         <tr>
-                            <th>ID giáo viên</th>
-                            <th>Tên giáo viên</th>
+                            <th>ID phiếu</th>
+                            <th>Tên học sinh</th>
+                            <th>Ngày sinh </th>
                             <th>Giới tính</th>
-                            <th>Ngày sinh</th>
+                            <th>Địa chỉ</th>
+                            <th>Loại lớp đăng kí</th>
+                            <th>Tên phụ huynh</th>
                             <th>Số điện thoại</th>
-                            <th>Lớp phụ trách</th>
-                            <th>Xóa</th>
+                            <th>Năm học/th>
+                            <th>Duyệt</th>
                         </tr>";
 
                 $i = 0;
                 while($row = $result->fetch_assoc()) {
                     $class = ($i % 2 == 0) ? 'even-row' : 'odd-row';
                     echo "<tr class='$class'>
-                            <td>".$row["id_giao_vien"]."</td>
-                            <td>".$row["ten_giao_vien"]."</td>
-                            <td>".$row["gioi_tinh_gv"]."</td>
-                            <td>".$row["ngay_sinh_gv"]."</td>
-                            <td>".$row["dien_thoai_gv"]."</td>
-                            <td>".$row["lop_phu_trach"]."</td>
-                            <td><input type='checkbox' name='delete[]' value='".$row["id_giao_vien"]."'></td>
+                            <td>".$row["id_phieu"]."</td>
+                            <td>".$row["ten_hoc_sinh"]."</td>
+                            <td>".$row["ngay_sinh_hs"]."</td>
+                            <td>".$row["gioi_tinh_hs"]."</td>
+                            <td>".$row["dia_chi"]."</td>
+                            <td>".$row["loai_lop_dang_ki"]."</td>
+                            <td>".$row["ten_phu_huynh"]."</td>
+                            <td>".$row["dien_thoai_phu_huynh"]."</td>
+                            <td>".$row["nam_hoc"]."</td>
+                            <td><input type='checkbox' name='approve' value='".$row["id_phieu"]."'></td>
                         </tr>";
                     $i++;
                 }
@@ -96,31 +102,31 @@
             }
         ?>
         </div>
-        <input style="padding:10px;font-size:15px;" type="submit" name="submit" value="Xóa giáo viên">
+        <input style="padding:10px;font-size:15px;" type="submit" name="submit" value="Phê duyệt">
     </form>
 
     <?php
 
         if (isset($_POST['submit'])) {
-            if (!empty($_POST['delete'])) {
-                foreach ($_POST['delete'] as $deleteId) {
-                    $update3 = "UPDATE lop SET gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+            if (!empty($_POST['approve'])) {
+                foreach ($_POST['approve'] as $approveId) {
+                    $update3 = "UPDATE lop SET gv_phu_trach = NULL WHERE id_gv_phu_trach = '$approveId'";
                     if ($conn->query($update3) !== TRUE) {
                         echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
                     }
-                    $update1 = "UPDATE lop SET id_gv_phu_trach = NULL WHERE id_gv_phu_trach = '$deleteId'";
+                    $update1 = "UPDATE lop SET id_gv_phu_trach = NULL WHERE id_gv_phu_trach = '$approveId'";
                     if ($conn->query($update1) !== TRUE) {
                         echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
                     }
                     
                 
-                    $update2 = "UPDATE lop_phu_trach SET id_giao_vien = NULL WHERE id_giao_vien = '$deleteId'";
+                    $update2 = "UPDATE lop_phu_trach SET id_giao_vien = NULL WHERE id_giao_vien = '$approveId'";
                     if ($conn->query($update2) !== TRUE) {
                         echo "Lỗi khi cập nhật dữ liệu: " . $conn->error;
                     }
 
                 
-                    $sql = "DELETE FROM giao_vien WHERE id_giao_vien = '$deleteId'"; // Query xóa dữ liệu từ CSDL
+                    $sql = "approve FROM giao_vien WHERE id_giao_vien = '$approveId'"; // Query xóa dữ liệu từ CSDL
                     if ($conn->query($sql) !== TRUE) {
                         echo "Lỗi khi xóa bản ghi: " . $conn->error;
                     }

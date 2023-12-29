@@ -106,7 +106,7 @@
             <ul>
                 <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                <li><a href=''>Phụ huynh</a></li>
+                <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
                 <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
             </ul>
