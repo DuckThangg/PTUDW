@@ -1,0 +1,141 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    background-image: url(/PHP/BTL/images/background.jpg);
+    background-size: 100%;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+
+}
+
+
+
+header{
+    display: flex;
+    justify-content: space-around;
+}
+
+header img{
+    width: 120px;
+}
+
+header ul{
+    display: flex;
+    gap: 30px;
+    margin-top: 25px;
+}
+
+header li{
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+a{
+    text-decoration: none;
+}
+.container {
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Định dạng bảng */
+.my-table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+/* Định dạng dòng chẵn */
+.even-row {
+    background-color: #ffffff; /* Màu nền trắng */
+}
+
+/* Định dạng dòng lẻ */
+.odd-row {
+    background-color: #a8e6cf; /* Màu nền xanh lục */
+}
+
+/* Định dạng các ô trong bảng */
+.my-table td {
+    text-align: center; /* Căn giữa nội dung trong ô */
+    padding: 8px; /* Khoảng cách lề để tạo không gian xung quanh nội dung */
+}
+
+.table{
+    padding:  50px 0;
+    background-color: whitesmoke;
+    width: 80%;
+    margin: 50px auto;
+    border-radius: 20px;
+}
+.form {
+    margin: 30px auto;
+    background-color: #d3f5e0; /* Màu nền của form */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+    width: 80%; /* Độ rộng của form */
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+select,
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: calc(100% - 10px); /* Chiều rộng của input trừ đi padding */
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+#id_lop{
+    padding: 10px;
+}
+
+.submit{
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #555;
+}
+
+.change_class{
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+}
+h2{
+    margin-bottom:0px ;
+}
+.back{
+    text-align: left;
+}
