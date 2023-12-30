@@ -25,7 +25,7 @@
             </ul>
         </div>
         <?php
-            require "connect.php";
+            require '../connect.php';
             mysqli_set_charset($conn, 'UTF8');
             session_start();
             $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
