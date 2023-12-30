@@ -88,22 +88,28 @@ a{
 }
 
 button {
-    padding: 8px 16px;
-    background-color: #007BFF;
-    color: #fff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #51ba54;
+    color: white;
     border: none;
+    text-decoration: none;
     cursor: pointer;
+    margin-right: 50px;
+
 }
-button a{
-    text-decoration: none;
-    color:white;
-}
-button a:hover{
-    text-decoration: none;
-    color:white;
-}
+
 button:hover {
-    background-color: #01458e;
+    background-color: #45a049;
+}
+
+button a {
+    color: white;
+}
+
+button:hover a {
+    color: white;
 }
 
 

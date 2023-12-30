@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="../css/class.css">
+    <title>Document</title>
+    <style>
+        #studentTable {
+            border-collapse: collapse;
+        }
 
+        th,td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -13,15 +24,70 @@
             <a href="/PHP/BTL/index.php"> <img  src="../images/icon-2.png" alt=""> </a>
         </div>
 
-        <div>
-            <ul>
-                <li><a href="/PHP/BTL/php/teacher.php">Giáo viên</a></li>
-                <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
-                <li><a href="/PHP/BTL/php/student.php">Học sinh</a></li>
-                <li><a href="/PHP/BTL/php/parents.php">Phụ huynh</a></li>
-                <li><a href="">Đăng kí học</a></li>
-            </ul>
-        </div>
+        <?php
+        session_start();
+        if (!isset($_SESSION['user_name']))
+        {
+            echo "
+            <div>
+                <ul>
+                    <li><a href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
+                    <li><a href='/PHP/BTL/php/register.php'>Đăng kí</a></li>
+                </ul>
+            </div> ";
+            
+        }
+        if(isset($_SESSION['user_name'])){
+            require 'connect.php';
+            $user_name = $_SESSION['user_name'];
+            $sql = "SELECT *FROM users WHERE user_name = '$user_name' ";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user_role = $row['chuc_vu'];
+                // Tài khoản đăng nhập là giáo viên
+                if($user_role == 'Giáo viên'){
+                    echo "
+                        <div>
+                            <ul>
+                            <li><a href='/PHP/BTL/php/teacher/class.php'>Lớp học</a></li>
+                            <li><a href='/PHP/BTL/php/teacher/student.php'>Học sinh</a></li>
+                            <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
+                            <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                            <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            </ul>
+                        </div> ";
+                }
+                // Tài khoản đăng nhập là phụ huynh
+                elseif($user_role == 'Phụ huynh'){
+                    echo "
+                        <div>
+                            <ul>
+                                <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
+                                <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
+                                <li><a href='/PHP/BTL/php/parents/student.php'>Học sinh</a></li>
+                                <li><a href='/PHP/BTL/php/parents/register_student.php'>Đăng ký học</a></li>
+                                <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            </ul>
+                        </div> ";
+                }else{
+                    echo "
+                        <div>
+                            <ul>
+                                <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
+                                <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
+                                <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
+                                <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
+                                <li><a href='/PHP/BTL/php/admin/account.php'>Tài khoản</a></li>
+                                <li><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>
+                                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            </ul>
+                        </div> ";
+                }
+            }
+        }
+        ?>
     </header>
 
     
@@ -29,7 +95,6 @@
         require 'connect.php';
         
         mysqli_set_charset($conn, 'UTF8');
-        session_start();
         $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
         if (isset($_SESSION['user_name'])){
             $user_name = $_SESSION['user_name'];
@@ -42,12 +107,12 @@
                 $position = $row['chuc_vu'];
 
                 if ($position === 'ADMIN') {
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
+                    echo "<button style='margin:50px 50px 0 200px'><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
                     echo "<button><a href='/PHP/BTL/php/admin/allocation.php'>Phân bổ giáo viên phụ trách </a></button>";
                     echo "<button><a href='/PHP/BTL/php/admin/add_class.php'>Mở thêm lớp học</a></button>";
                     echo "<button><a href='/PHP/BTL/php/admin/change_class.php'>Thay đổi thông tin lớp học</a></button>";
                 } elseif ($position === 'Giáo viên') {
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Đăng kí mở lớp</a></button>";
+                    echo "<button ><a href='/PHP/BTL/php/list_class.php'>Đăng kí mở lớp</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
                 } elseif ($position === 'Phụ huynh') {
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";

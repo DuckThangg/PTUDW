@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="../../css/teachers.css">
     <title>Document</title>
 
@@ -19,7 +20,7 @@
                 <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/student.php">Học sinh</a></li>
                 <li><a href="/PHP/BTL/php/parents.php">Phụ huynh</a></li>
-                <li><a href="">Đăng kí học</a></li>
+                <li><a href="/PHP/BTL/php/admin/registration_form.php">Đăng kí học</a></li>
             </ul>
         </div>
     </header>

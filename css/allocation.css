@@ -42,7 +42,7 @@ a{
 
 /* Định dạng bảng */
 .my-table {
-    width: 90%;
+    width: 100%;
     margin: auto;
     border-collapse: collapse;
 }
@@ -66,7 +66,7 @@ a{
 .table{
     padding:  50px 0;
     background-color: whitesmoke;
-    width: 80%;
+    width: 90%;
     margin: 50px auto;
     border-radius: 20px;
 }

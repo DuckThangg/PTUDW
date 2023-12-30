@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
-
-    <link rel="stylesheet" href="../css/student.css">
-    
+    <link rel="stylesheet" href="../../css/class.css">
     <title>Document</title>
     <style>
         #studentTable {
@@ -23,7 +21,7 @@
 <body>
     <header>
         <div>
-            <a href="/PHP/BTL/index.php"> <img  src="../images/icon-2.png" alt=""> </a>
+            <a href="/PHP/BTL/index.php"> <img  src="../../images/icon-2.png" alt=""> </a>
         </div>
 
         <?php
@@ -40,7 +38,7 @@
             
         }
         if(isset($_SESSION['user_name'])){
-            require 'connect.php';
+            require '../connect.php';
             $user_name = $_SESSION['user_name'];
             $sql = "SELECT *FROM users WHERE user_name = '$user_name' ";
             $result = $conn->query($sql);
@@ -81,7 +79,7 @@
                                 <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
                                 <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
                                 <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
-                                <li><a href='/PHP/BTL/php/admin/account.php'>Tài khoản</a></li>
+                                <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
                                 <li><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>
                                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                             </ul>
@@ -92,76 +90,54 @@
         ?>
     </header>
 
+    <div class="table">
     <?php
-        require 'connect.php';
+        require '../connect.php';
         
         mysqli_set_charset($conn, 'UTF8');
         $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-        if (isset($_SESSION['user_name'])){
-            $user_name = $_SESSION['user_name'];
+        if ($_SESSION['user_name']='Admin'){
+            $sql = "SELECT * FROM users";
 
-            $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
-            $result = $mysqli->query($query);
+            $result= $conn->query($sql);
 
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $position = $row['chuc_vu'];
-
-                if ($position === 'ADMIN') {
-                    echo "<button style='margin:50px 50px 0 400px;'><a href='/PHP/BTL/php/admin/add_student.php'>Thêm học sinh</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/admin/change_student.php'>Cập nhật thông tin</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/admin/info_student.php'>Xem thông tin đầy đủ học sinh</a></button>";
-                } elseif ($position === 'Giáo viên') {
-                    echo "<button style='margin:50px 50px 0 400px;'><a href='/PHP/BTL/php/list_class.php'>Thêm sửa xóa học sinh</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/change_student.php'>Cập nhật thông tin</a></button>";
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin đầy đủ học sinh</a></button>";
-                } elseif ($position === 'Phụ huynh') {
-                    echo "<button style='margin:50px 50px 0 400px;><a href='/PHP/BTL/php/list_class.php'>Cập nhật thông tin</a></button>";
+            if($result->num_rows > 0){
+                echo "<table class='my-table' border='2'>
+                        <tr>
+                            <th>ID user</th>
+                            <th>Chức vụ</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Mật khẩu</th>
+                            <th>Số điện thoại</th>
+                            <th>Tên đầy đủ</th>
+                        </tr>";
+                $i = 0;
+                while($row = $result->fetch_assoc()) {
+                    $class = ($i % 2 == 0) ? 'even-row' : 'odd-row';
+                    echo "<tr class='$class'>
+                            <td>".$row["id_user"]."</td>
+                            <td>".$row["chuc_vu"]."</td>
+                            <td>".$row["user_name"]."</td>
+                            <td>".$row["user_password"]."</td>
+                            <td>".$row["phone"]."</td>
+                            <td>".$row["full_name"]."</td>
+                        </tr>";
+                    $i++;
                 }
-            } else {
-                echo "ban chua dang nhap";
-            }   
+                echo "</table>";
+            }
+            else{
+                echo "Không có thông tin để hiển thị";
+            }
+            $conn->close();
+
+
+               
         } 
     ?>
 
-    <div class="table">
-    <?php
-        require 'connect.php';
-        mysqli_set_charset($conn, 'UTF8');
-        $sql = "SELECT * FROM hoc_sinh";
 
-        $result= $conn->query($sql);
-
-        if($result->num_rows > 0){
-            echo "<table class='my-table' border='2'>
-                    <tr>
-                        <th>ID Lớp</th>
-                        <th>ID Học sinh</th>
-                        <th>Tên học sinh</th>
-                        <th>Ngày sinh</th>
-                        <th>Giới tính</th>
-                        <th>Năm học</th>
-                    </tr>";
-            $i = 0;
-            while($row = $result->fetch_assoc()) {
-                $class = ($i % 2 == 0) ? 'even-row' : 'odd-row';
-                echo "<tr class='$class'>
-                        <td>".$row["id_lop"]."</td>
-                        <td>".$row["id_hoc_sinh"]."</td>
-                        <td>".$row["ten_hoc_sinh"]."</td>
-                        <td>".$row["ngay_sinh_hs"]."</td>
-                        <td>".$row["gioi_tinh"]."</td>
-                        <td>".$row["nam_hoc"]."</td>
-                    </tr>";
-                $i++;
-            }
-            echo "</table>";
-        }
-        else{
-            echo "Không có thông tin để hiển thị";
-        }
-        $conn->close();
-    ?>
+    
     </div>
 </body>
 </html>

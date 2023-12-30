@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
+
     <link rel="stylesheet" href="/PHP/BTL/css/register_student.css">
     <title>Thêm học sinh</title>
 </head>
@@ -15,9 +16,10 @@
 
         <div>
             <ul>
-                <li><a href="/PHP/BTL/php/parents/class.php">Lớp học</a></li>
+                <li><a href="/PHP/BTL/php/teacher.php">Giáo viên</a></li>
+                <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/parents/student.php">Học sinh</a></li>
-                <li><a href="/PHP/BTL/php/parents/register_student.php">Phiếu đăng ký</a></li>
+                <li><a href="/PHP/BTL/php/parents/register_student.php">Đăng kí học</a></li>
                 <li><a href="/PHP/BTL/php/parents/account.php">Tài khoản</a></li>
                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
             </ul>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
+
     <link rel="stylesheet" href="../../css/list_class.css">
     <title>Document</title>
 </head>
@@ -19,7 +19,8 @@
                 <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/student.php">Học sinh</a></li>
                 <li><a href="/PHP/BTL/php/parents.php">Phụ huynh</a></li>
-                <li><a href="/PHP/BTL/php/admin/registration_form.php">Đăng kí học</a></li>
+                <li><a href="/PHP/BTL/php/parents/register_student.php">Đăng kí học</a></li>
+                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
             </ul>
         </div>
     </header>
@@ -27,41 +28,57 @@
     <?php
         require '../connect.php';
         mysqli_set_charset($conn, 'UTF8');
-        $sql = "SELECT * FROM hoc_sinh";
+        session_start();
 
-        $result = $conn->query($sql);
+        if (isset($_SESSION['user_name'])){
+            $user_name = $_SESSION['user_name'];
 
-        if ($result->num_rows > 0) {
-            echo "<table class='my-table' border='2'>
-                    <tr>
-                        <th>ID học sinh</th>
-                        <th>ID lớp</th>
-                        <th>Tên học sinh</th>
-                        <th>Ngày sinh</th>
-                        <th>Giới tính</th>
-                        <th>Năm học</th>
-                    </tr>";
-        
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>
-                        <td>" . $row["id_hoc_sinh"] . "</td>
-                        <td>" . $row["id_lop"] . "</td>
-                        <td>" . $row["ten_hoc_sinh"] . "</td>
-                        <td>" . $row["ngay_sinh_hs"] . "</td>
-                        <td>" . $row["gioi_tinh"] . "</td>
-                        <td>" . $row["nam_hoc"] . "</td>
-                        <td>
-                            <form action='' method='get'>
-                                <input type='hidden' name='id_hoc_sinh' value='" . $row["id_hoc_sinh"] . "'>
-                                <input type='submit' value='Chỉnh sửa'>
-                            </form>
-                        </td>
-                    </tr>";
+            $sql = "SELECT *
+                FROM hoc_sinh
+                WHERE id_hoc_sinh IN (
+                    SELECT id_hoc_sinh
+                    FROM giam_ho
+                    WHERE ten_phu_huynh = (
+                        SELECT full_name
+                        FROM users
+                        WHERE user_name = '$user_name'
+                    )
+            )";
+
+            $result = $conn->query($sql);
+                    
+            if ($result->num_rows > 0) {
+                echo "<table class='my-table' border='2'>
+                        <tr>
+                            <th>ID học sinh</th>
+                            <th>ID lớp</th>
+                            <th>Tên học sinh</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Năm học</th>
+                        </tr>";
+            
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                            <td>" . $row["id_hoc_sinh"] . "</td>
+                            <td>" . $row["id_lop"] . "</td>
+                            <td>" . $row["ten_hoc_sinh"] . "</td>
+                            <td>" . $row["ngay_sinh_hs"] . "</td>
+                            <td>" . $row["gioi_tinh"] . "</td>
+                            <td>" . $row["nam_hoc"] . "</td>
+                            <td>
+                                <form action='' method='get'>
+                                    <input type='hidden' name='id_hoc_sinh' value='" . $row["id_hoc_sinh"] . "'>
+                                    <input type='submit' value='Chỉnh sửa'>
+                                </form>
+                            </td>
+                        </tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "Không có thông tin để hiển thị";
             }
-            echo "</table>";
-        } else {
-            echo "Không có thông tin để hiển thị";
-        }
+        }    
     ?>
     </div>
     <?php
