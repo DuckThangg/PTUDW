@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/teachers.css">
     <title>Document</title>
-
+    <style>
+        table{
+            width:90%;
+        }
+    </style>
 </head>
 <body>
     <header>

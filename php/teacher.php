@@ -19,7 +19,32 @@
                 <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
                 <li><a href="/PHP/BTL/php/student.php">Học sinh</a></li>
                 <li><a href="/PHP/BTL/php/parents.php">Phụ huynh</a></li>
-                <li><a href="">Đăng kí học</a></li>
+                <?php
+                    require 'connect.php';
+                    
+                    mysqli_set_charset($conn, 'UTF8');
+                    session_start();
+                    $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
+                    if (isset($_SESSION['user_name'])){
+                        $user_name = $_SESSION['user_name'];
+                    
+                        $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
+                        $result = $mysqli->query($query);
+                    
+                        if ($result && $result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            $position = $row['chuc_vu'];
+                        
+                            if ($position === 'ADMIN') {
+                                echo "<li><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>";
+                            } elseif ($position === 'Phụ huynh') {
+                                echo "<li><a href='/PHP/BTL/php/parents/register_student.php'>Đăng kí học</a></li>";
+                            } else {
+                            echo "ban chua dang nhap";
+                            }
+                        }   
+                    } 
+                ?>
             </ul>
         </div>
     </header>
@@ -28,7 +53,6 @@
         require 'connect.php';
         
         mysqli_set_charset($conn, 'UTF8');
-        session_start();
         $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
         if (isset($_SESSION['user_name'])){
             $user_name = $_SESSION['user_name'];

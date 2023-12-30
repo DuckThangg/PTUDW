@@ -10,7 +10,7 @@
 <body>
     <header>
         <div>
-            <a href="/PHP/BTL/index.php"> <img  src="../images/icon-2.png" alt=""> </a>
+            <a href="/PHP/BTL/index.php"> <img  src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
 
         <div>
@@ -40,22 +40,22 @@
                             <input type="text" id="ngay_sinh_hs" name="ngay_sinh_hs" placeholder = "Ví dụ : 1997-12-28">
                         </div>
                         <div class="input-group">
-                            <label for="gioi_tinh">Giới tính</label>
-                            <input type="text" id="gioi_tinh" name="gioi_tinh">
+                            <label for="gioi_tinh_hs">Giới tính</label>
+                            <input type="text" id="gioi_tinh_hs" name="gioi_tinh_hs">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <label for="dia_chi">Địa chỉ</label>
-                            <input type="text" id="dia_chi" name="dia_chi">
+                            <label for="dia_chi_hs">Địa chỉ</label>
+                            <input type="text" id="dia_chi_hs" name="dia_chi_hs">
                         </div>
                         <div class="input-group">
                             <label for="ten_phu_huynh">Tên phụ huynh </label>
                             <input type="text" id="ten_phu_huynh" name="ten_phu_huynh" placeholder = "">
                         </div>
                         <div class="input-group">
-                            <label for="so_dien_thoai">SĐT</label>
-                            <input type="text" id="so_dien_thoai" name="so_dien_thoai" >
+                            <label for="dien_thoai_phu_huynh">SĐT</label>
+                            <input type="text" id="dien_thoai_phu_huynh" name="dien_thoai_phu_huynh" >
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -64,7 +64,7 @@
                             <!-- Tạo ra select/option để lựa chọn loại lớp từ bảng loai_lop trong csdl -->
                             <select id='id_lop' name ='id_lop'>
                                 <?php
-                                    require 'connect.php';
+                                    require '../connect.php';
                                     $sql = "SELECT * FROM loai_lop";
                                     $result = $conn->query($sql);
                                     $i = 1;
@@ -86,7 +86,20 @@
                         </div>
                         <div class="input-group">
                             <label for="ten_lop">ID loại lớp</label>
-                            <input type="text" id="ten_lop" name="ten_lop" >
+                            <select id='loai_lop_dang_ki' name ='loai_lop_dang_ki'>
+                            <?php
+                                    $sql = "SELECT DISTINCT id_loai_lop FROM loai_lop";
+                                    $result = $conn->query($sql);
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<option value='" . $row['id_loai_lop'] . "'>" . $row['id_loai_lop'] . "</option>";
+                                        }
+                                    } else {
+                                            echo "<option value=''>No origin found</option>";
+                                    }
+                                    $conn->close();
+                                ?>
+                            </select><br>
                         </div>
                         <div class="input-group">
                             <label for="nam_hoc">Năm học</label>
@@ -100,29 +113,26 @@
     </div>
         
     <?php
-        if (isset($_GET['id_hoc_sinh'])) {
-            require "connect.php";
+        if (isset($_GET['submit'])) {
+            require "../connect.php";
             mysqli_set_charset($conn, 'UTF8');
 
-            $id_hoc_sinh = $_GET['id_hoc_sinh'];
             $ten_hoc_sinh = $_GET['ten_hoc_sinh'];
             $ngay_sinh_hs = $_GET['ngay_sinh_hs'];
-            $gioi_tinh = $_GET['gioi_tinh'];
+            $gioi_tinh_hs = $_GET['gioi_tinh_hs'];
+            $dia_chi_hs = $_GET['dia_chi_hs'];
+            $loai_lop_dang_ki = $_GET['loai_lop_dang_ki'];
+            $ten_phu_huynh = $_GET['ten_phu_huynh'];
+            $dien_thoai_phu_huynh = $_GET['dien_thoai_phu_huynh'];
             $nam_hoc = $_GET['nam_hoc'];
-    
-            $check_query = "SELECT * FROM phieu_dang_ky WHERE id_phieu = '$id_hoc_sinh'";
-            $result = $conn->query($check_query);
+            
+            $add_register = "INSERT INTO `phieu_dang_ky`(`ten_hoc_sinh`, `ngay_sinh_hs`, `gioi_tinh_hs`, `dia_chi_hs`, `loai_lop_dang_ky`, `ten_phu_huynh`, `dien_thoai_phu_huynh`, `nam_hoc`) 
+                             VALUES ('$ten_hoc_sinh','$ngay_sinh_hs','$gioi_tinh_hs','$dia_chi_hs','$loai_lop_dang_ki','$ten_phu_huynh','$dien_thoai_phu_huynh','$nam_hoc')";
 
-            if ($result->num_rows > 0) {
-                echo "<h1 style='text-align:center;color:red;margin-top:20px' >ID học sinh đã tồn tại. Vui lòng chọn ID khác.</h1>";
+            if ($conn->query($add_register)===TRUE) {
+                echo "<h1 style='text-align:center;color:white;margin-top:20px' >Đăng kí thành công, vui lòng chờ quản trị viên xét duyệt !</h1>";
             } else {
-                // Thêm bản ghi vào CSDL nếu ID không trùng
-                $insert_query = "INSERT INTO phieu_dang_ky (ten_hoc_sinh, ngay_sinh_hs, gioi_tinh_hs,dia_chi_hs,loai_lop_dang_ky,ten_phu_huynh,dien_thoai_phu_huynh, nam_hoc) VALUES ('$id_hoc_sinh', '$ten_hoc_sinh', '$ngay_sinh_hs', '$gioi_tinh', '$nam_hoc')";
-                if ($conn->query($insert_query) === TRUE) {
-                    echo "<h1 style='text-align:center;color:white;margin-top:20px' >Thêm học sinh thành công!</h1>";
-                } else {
-                    echo "Lỗi khi thêm học sinh: " . $conn->error;
-                }
+                    echo "Lỗi khi đăng kí học sinh: " . $conn->error;
             }
         }
     ?>

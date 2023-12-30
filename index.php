@@ -54,7 +54,7 @@
                                 <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
                                 <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
                                 <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
-                                <li><a href=''>Đăng ký học</a></li>
+                                <li><a href='/PHP/BTL/php/parents/register_student.php'>Đăng ký học</a></li>
                                 <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
                                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                             </ul>
@@ -68,6 +68,7 @@
                                 <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
                                 <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
                                 <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                                <li><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>
                                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                             </ul>
                         </div> ";
