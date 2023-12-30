@@ -70,3 +70,87 @@ a{
     margin: 50px auto;
     border-radius: 20px;
 }
+h3 {
+    margin: 0px 20px 10px 20px;
+    text-align:center;
+    font-size: 32px;
+}
+
+.row {
+    margin: auto;
+}
+
+.row .col-md-3 {
+    background-color: white;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.row .col-md-9 {
+    width: 73.67%;
+    border-radius: 5px;
+    background-color: #d3f5e0;
+    text-align: center;
+}
+
+img {
+    width: 70%;
+}
+
+button {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #51ba54;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button a {
+    color: white;
+}
+
+button:hover a {
+    color: white;
+}
+
+.head {
+    border-bottom: 1px solid #c9cacc;
+    margin-bottom: 10px;
+    max-width: 100%;
+    padding: 0px 15px 0px 15px;
+    text-align:left;
+}
+
+.head a {
+    border-bottom: 3px solid #0f75bc;
+    color: #024da1;
+    font-size: 18px;
+    line-height: 41px;
+    padding: 5px 0 10px;
+    text-decoration: none;
+    margin-right:10px;
+}
+
+.info {
+    background-color: white;
+}
+
+p {
+    margin: 10px
+}
+
+.edit-section {
+    display: none;
+}
+h4{
+    margin: 20px 0px;
+}
