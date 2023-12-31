@@ -120,8 +120,10 @@
                 } elseif ($position === 'Giáo viên') {
                     echo "<button><a href='/PHP/BTL/php/admin/list_class.php'>Thay đổi thông tin</a></button>";
                 } elseif ($position === 'Phụ huynh') {
-                    echo "<button><a href='/PHP/BTL/php/admin/list_class.php'>Thay đổi thông tin</a></button>";
+                    
                 } 
+            }else{
+                echo "<h3 style="text-align:center">Bạn chưa đăng nhập</h3>";
             }
         } 
     ?>
