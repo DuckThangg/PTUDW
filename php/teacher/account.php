@@ -172,7 +172,7 @@
                             $user_name = $_SESSION['user_name'];
 
                             $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
-                            $result = $mysqli->query($query);
+                            $result = $conn->query($query);
 
                             if ($result && $result->num_rows > 0) {
                                 $row = $result->fetch_assoc();

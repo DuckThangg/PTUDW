@@ -6,35 +6,7 @@
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="/PHP/BTL/css/student.css">
     <script>
-        function searchTable() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.querySelector("#search_input");
-            filter = input.value.toUpperCase();
-            table = document.querySelector("#studentTable");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                if (i === 0) { 
-                    continue;
-                }
-                var found = false;
-                for (var j = 0; j <= 6; j++) {
-                    td = tr[i].getElementsByTagName("td")[j];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-                if (found) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
+        
     </script>
     <title>Học sinh</title>
 </head>
@@ -44,33 +16,7 @@
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
         <?php
-            require "connect.php";
-            mysqli_set_charset($conn, 'UTF8');
-            session_start();
-            $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-            if (isset($_SESSION['user_name'])){
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-                </ul>
-            </div>
-        <?php
-            }else{
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
-                </ul>
-            </div>
-        <?php 
-            }
+            require "header.php";
         ?>
     </header>
 
@@ -79,7 +25,7 @@
             $user_name = $_SESSION['user_name'];
     
             $query = "SELECT chuc_vu, lop_phu_trach FROM users JOIN giao_vien ON users.user_name = giao_vien.id_giao_vien WHERE user_name = '$user_name'";
-            $result = $mysqli->query($query);
+            $result = $conn->query($query);
     
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
