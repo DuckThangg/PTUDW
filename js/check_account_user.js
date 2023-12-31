@@ -1,28 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#checkForm').onsubmit = check;
 
-    // Khi nhấn click id editButton thì hiện ra phần chỉnh sửa thông tin
     document.querySelector('#editButton').addEventListener('click', function () {
         document.querySelector('#editSection').style.display = 'block';
     });
 });
 
 function check() {
-    const name = document.querySelector("#newName").value;
-    const date = document.querySelector("#newDate").value;
-    const phone = document.querySelector("#newPhone").value;
-    //Kiểm tra xem user có nhập đầy đủ thông tin
-    if (name === "" || date === "" || phone === "") {
-        alert("Bạn đã nhập thiếu thông tin. Vui lòng kiểm tra lại.");
-    } else {
-        if (phone.length >= 10) {
-            alert("Bạn đã đăng ký thành công!");
-        } else {
-            alert("Số điện thoại không hợp lệ");
+        const newPassword = document.querySelector("#newPassword").value;
+        const rePassword = document.querySelector("#rePassword").value;
+
+        //Check pass có ít nhất ký tự hoa /thường/ số
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+        if (newPassword === "" || rePassword === "") {
+            alert("Không được để trống");
         }
-        
-        return phone.length >= 10;
-    }
-    // Tải lại trang
+        else{
+            if(newPassword.length >= 8 && rePassword === newPassword && passwordRegex.test(newPassword)){
+                alert("Bạn đã đăng ký thành công!")
+            }
+            else{
+                if(newPassword.length < 8){
+                    alert("Mật khẩu yêu cầu 8 ký tự trở lên!")
+                }
+                else if(newPassword != rePassword ){
+                    alert("Mật khẩu không trùng nhau!")
+                }
+            }
+        }
     window.location.reload();
 }
