@@ -115,9 +115,9 @@
                     echo "<button ><a href='/PHP/BTL/php/list_class.php'>Đăng kí mở lớp</a></button>";
                     echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
                 } elseif ($position === 'Phụ huynh') {
-                    echo "<button><a href='/PHP/BTL/php/list_class.php'>Xem thông tin lớp học</a></button>";
+                    
                 } 
-            }
+            }echo "Bạn cần đăng nhập";
         } 
     ?>
 
