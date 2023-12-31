@@ -102,7 +102,41 @@
 
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#checkForm').onsubmit = check;
 
+            document.querySelector('#editButton').addEventListener('click', function () {
+                document.querySelector('#editSection').style.display = 'block';
+            });
+        });
+
+        function check() {
+                const newPassword = document.querySelector("#newPassword").value;
+                const rePassword = document.querySelector("#rePassword").value;
+
+                //Check pass có ít nhất ký tự hoa /thường/ số
+                const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+                if (newPassword === "" || rePassword === "") {
+                    alert("Không được để trống");
+                }
+                else{
+                    if(newPassword.length >= 8 && rePassword === newPassword && passwordRegex.test(newPassword)){
+                        alert("Bạn đã đăng ký thành công!")
+                    }
+                    else{
+                        if(newPassword.length < 8){
+                            alert("Mật khẩu yêu cầu 8 ký tự trở lên!")
+                        }
+                        else if(newPassword != rePassword ){
+                            alert("Mật khẩu không trùng nhau!")
+                        }
+                    }
+                }
+            window.location.reload();
+        }
+    </script>
 </head>
 
 <body>
@@ -111,32 +145,7 @@
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
         <?php
-            require "connect.php";
-            mysqli_set_charset($conn, 'UTF8');
-            session_start();
-            if (isset($_SESSION['user_name'])){
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-                </ul>
-            </div>
-        <?php
-            }else{
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
-                </ul>
-            </div>
-        <?php 
-            }
+            require "header.php";
         ?>
     </header>
 
@@ -206,7 +215,7 @@
                     <!-- Chỉnh sửa thông tin giáo viên -->
                     <div class="edit-section" id="editSection">
                         <h4>Chỉnh sửa tài khoản</h4>
-                        <form action="" method="POST">
+                        <form id='checkForm' action="" method="POST">
                             <div class="row">
                                 <div class="col-md-6" style="padding-left:10px">
                                     <label for="newPassword">Mật khẩu mới: </label>
@@ -227,9 +236,14 @@
                                 $user_name = $_SESSION['user_name'];
 
                                 // Update password bảng user
-                                $sql_update_name = "UPDATE users SET user_password = '$newPassword' WHERE user_name ='$user_name'";
+                                $sql_update_name = "UPDATE users 
+                                    SET user_password = '$newPassword' 
+                                    WHERE user_name ='$user_name' 
+                                    AND CHAR_LENGTH('$newPassword') >= 8 
+                                    AND '$newPassword' REGEXP BINARY '[A-Z]'";
+
                                 $result_update_name = $conn->query($sql_update_name);
-                                if ($newPassword===$rePassword) {
+                                if ($newPassword===$rePassword && strlen($newPassword) > 8) {
                                     if($result_update_name===TRUE){
                                         echo "Thay đổi mật khẩu thành công!";
                                     }
@@ -237,7 +251,7 @@
                                         echo "Thay đổi mật khẩu không thành công: " . $conn->error;
                                     }
                                 } else {
-                                    echo "Mật khẩu chưa khớp ";
+                                    echo "Mật khẩu chưa đúng yêu cầu ";
                                 }
                                 $conn->close();
                             }
@@ -247,12 +261,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('editButton').addEventListener('click', function (e) {
-            e.preventDefault(); 
-        document.getElementById('editSection').style.display = 'block';
-    });
 </script>
 
 </body>

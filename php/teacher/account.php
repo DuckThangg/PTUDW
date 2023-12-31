@@ -6,7 +6,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="/PHP/BTL/css/teachers.css">
+    <script src="/PHP/BTL/js/check_account.js"></script>
     <title>Tài khoản</title>
+    <style>
+        h3 {
+            margin: 0px 20px 10px 20px;
+            text-align:center;
+            font-size: 32px;
+        }
+
+        .row {
+            margin: auto;
+        }
+
+        .row .col-md-3 {
+            background-color: white;
+            text-align: center;
+            border-radius: 5px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .row .col-md-9 {
+            width: 73.67%;
+            border-radius: 5px;
+            background-color: #d3f5e0;
+            text-align: center;
+        }
+
+        img {
+            width: 70%;
+        }
+
+        button {
+            border-radius: 10px;
+            padding:8px;
+            font-size: 16px;
+            background-color: #51ba54;
+            color: white;
+            border: none;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button a {
+            color: white;
+        }
+
+        button:hover a {
+            color: white;
+        }
+
+        .head {
+            border-bottom: 1px solid #c9cacc;
+            margin-bottom: 10px;
+            max-width: 100%;
+            padding: 0px 15px 0px 15px;
+            text-align:left;
+        }
+
+        .head a {
+            border-bottom: 3px solid #0f75bc;
+            color: #024da1;
+            font-size: 18px;
+            line-height: 41px;
+            padding: 5px 0 10px;
+            text-decoration: none;
+            margin-right:10px;
+        }
+
+        .info {
+            background-color: white;
+        }
+
+        p {
+            margin: 10px
+        }
+
+        .edit-section {
+            display: none;
+        }
+        h4{
+            margin: 20px 0px;
+        }
+        input{
+            padding: 5px;
+        }
+        .col-md-6{
+            text-align:left;
+            margin-bottom:10px;
+            padding: 0px;
+
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#checkForm').onsubmit = check;
+
+            document.querySelector('#editButton').addEventListener('click', function () {
+                document.querySelector('#editSection').style.display = 'block';
+            });
+        });
+
+        function check() {
+            const name = document.querySelector("#newName").value;
+            const date = document.querySelector("#newDate").value;
+            const phone = document.querySelector("#newPhone").value;
+
+            if (name === "" || date === "" || phone === "") {
+                alert("Bạn đã nhập thiếu thông tin. Vui lòng kiểm tra lại.");
+            } else {
+                if (phone.length >= 10) {
+                    alert("Bạn đã đăng ký thành công!");
+                } else {
+                    alert("Số điện thoại không hợp lệ");
+                }
+                return phone.length >= 10;
+            }
+            window.location.reload();
+        }
+    </script>
 </head>
 
 <body>
@@ -14,38 +138,8 @@
         <div>
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
-        
         <?php
-            require "connect.php";
-            mysqli_set_charset($conn, 'UTF8');
-            session_start();
-            $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-            
-            if (isset($_SESSION['user_name'])){
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-                </ul>
-            </div>
-        <?php
-            }else{
-        ?>
-            <div>
-                <ul>
-                    <li><a href="/PHP/BTL/php/teacher/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/student.php">Học sinh</a></li>
-                    <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
-                    <li><a href="/PHP/BTL/php/teacher/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
-                </ul>
-            </div>
-        <?php 
-            }
+            require "header.php";
         ?>
     </header>
 
@@ -143,7 +237,7 @@
                     <!-- Chỉnh sửa thông tin giáo viên -->
                     <div class="edit-section" id="editSection">
                         <h4>Thay đổi thông tin</h4>
-                        <form action="" method="POST">
+                        <form id ="checkForm" action="" method="POST">
                             <div class="row" style="text-align:left">
                                 <div class="col-md-6">
                                     <label for="newName">Tên giáo viên:</label>
@@ -153,13 +247,13 @@
                                     <input type="number" id="newPhone" name="newPhone" value="<?php echo $sdt;?>"><br>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="newPhone">Ngày sinh:</label>
-                                    <input type="Date" id="newDate" name="newDate" value="<?php echo $ns;?>"><br>
+                                    <label for="newDate">Ngày sinh:</label>
+                                    <input type="date" id="newDate" name="newDate" value="<?php echo $ns;?>"><br>
                                     <br>
                                     <label for="newGender">Giới tính:</label>
                                     <select id="newGender" name="newGender">
-                                        <option value="Nam">Nam</option>
-                                        <option value="Nữ">Nữ</option>
+                                        <option value="Nam" <?php if ($gender === 'Nam') echo 'selected'; ?>>Nam</option>
+                                        <option value="Nữ" <?php if ($gender === 'Nữ') echo 'selected'; ?>>Nữ</option>
                                     </select>
                                 </div>
                             </div><br>
@@ -180,9 +274,9 @@
 
                                 $result_update = $conn->query($sql_update_teacher);
                                 // Update fullname bảng user
-                                $sql_update_name = "UPDATE users SET fullname = '$newName', ngay_sinh = '$newDate', phone = '$newPhone' WHERE user_name ='$user_name'";
+                                $sql_update_name = "UPDATE users SET full_name = '$newName', phone = '$newPhone' WHERE user_name ='$user_name'";
                                 $result_update_name = $conn->query($sql_update_name);
-                                if ($result_update && $result_update_name) {
+                                if ($result_update && $result_update_name && $newName != NULL && $newPhone!=NULL && $newDate!=NULL) {
                                     echo "Chỉnh sửa thành công!";
                                 } else {
                                     echo "Chỉnh sửa không thành công: " . $conn->error;
@@ -195,13 +289,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('editButton').addEventListener('click', function (e) {
-            e.preventDefault(); 
-        document.getElementById('editSection').style.display = 'block';
-    });
-</script>
 
 </body>
 
