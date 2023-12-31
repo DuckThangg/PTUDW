@@ -122,7 +122,7 @@
                 alert("Bạn đã nhập thiếu thông tin. Vui lòng kiểm tra lại.");
             } else {
                 if (phone.length >= 10) {
-                    alert("Bạn đã đăng ký thành công!");
+                    alert("cập nhật thông tin thành công!");
                 } else {
                     alert("Số điện thoại không hợp lệ");
                 }
