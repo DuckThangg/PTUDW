@@ -13,6 +13,28 @@
             text-align: center;
         }
     </style>
+    <script>
+        //Kiểm tra lớp đã có giáo viên phụ trách chưa
+        document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('input[name="register[]"]');
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', check);
+        });
+
+        function check() {
+            if (this.checked) {
+                var classId = this.value;
+                var teacherCell = document.querySelector('#teacher' + classId);
+
+                if (teacherCell.innerHTML.trim() !== '') {
+                    alert('Lớp đã có người đăng ký. Không thể đăng ký.');
+                    this.checked = false;
+                }
+            }
+        }
+    });
+    </script>
 </head>
 <body>
     <header>
