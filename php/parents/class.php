@@ -117,7 +117,9 @@
                 } elseif ($position === 'Phụ huynh') {
                     
                 } 
-            }echo "Bạn cần đăng nhập";
+            }else{
+                echo "Bạn cần đăng nhập";
+            }
         } 
     ?>
 
