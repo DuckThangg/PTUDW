@@ -6,6 +6,18 @@
     <link rel="stylesheet" href="/PHP/BTL/css/bootstrap.css">
     <link rel="stylesheet" href="../../css/list_class.css">
     <title>Document</title>
+    <style>
+        #studentTable {
+            border-collapse: collapse;
+        }
+
+        th,td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
     <header>

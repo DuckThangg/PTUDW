@@ -100,7 +100,10 @@
             text-align:left;
             margin-bottom:10px;
             padding: 0px;
+        }
 
+        #editButton{
+            margin-left:40px;
         }
     </style>
 
@@ -158,11 +161,11 @@
                             if (isset($_SESSION['user_name'])){
                                 //Hiển thị họ tên giáo viên
                                 $user_name = $_SESSION['user_name'];
-                                $sql_name = "SELECT *FROM giao_vien WHERE id_giao_vien = '$user_name'";
+                                $sql_name = "SELECT * FROM phu_huynh WHERE ten_phu_huynh = (SELECT full_name FROM users WHERE user_name = '$user_name')";
                                 $result= $conn->query($sql_name);
                                 if($result->num_rows > 0){
                                     $row = $result->fetch_assoc();
-                                    echo "<h4>". $row['ten_giao_vien'] . "</h4>";
+                                    echo "<h4>". $row['ten_phu_huynh'] . "</h4>";
                                 }
                             }
                             else{
@@ -181,7 +184,7 @@
                             if ($result && $result->num_rows > 0) {
                                 $row = $result->fetch_assoc();
                                 $position = $row['chuc_vu'];
-                                if ($position === 'Giáo viên') {
+                                if ($position === 'Phụ huynh') {
                                     echo "<button id='editButton'>Chỉnh sửa thông tin</button>";
                                 } 
                             } else {
@@ -199,40 +202,40 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-4" style="text-align:left">
-                                    <p>Lớp phụ trách</p>
-                                    <p>Tên giáo viên</p>
-                                    <p>Mã giáo viên</p>
-                                    <p>Giới tính</p>
+                                    <p>ID phụ huynh</p>
+                                    <p>Tên phụ huynh</p>
                                     <p>Ngày sinh</p>
+                                    <p>Giới tính</p>
                                     <p>Điện thoại</p>
                                 </div>
                                 <div class="col-md-8" style="text-align:left">
                                 <?php
                                     if (isset($_SESSION['user_name'])){
                                         $user_name = $_SESSION['user_name'];
-                                        $sql = "SELECT * FROM giao_vien WHERE id_giao_vien = '$user_name'";
+                                        $sql = " SELECT * FROM phu_huynh WHERE ten_phu_huynh = (SELECT full_name FROM users WHERE user_name = '$user_name')";
                                         $result = $conn->query($sql);
 
                                         if ($result->num_rows > 0) {
                                             $row = $result->fetch_assoc();
 
-                                            $name = $row["ten_giao_vien"];
-                                            $id_lop = $row["lop_phu_trach"];
-                                            $id_gv = $row["id_giao_vien"];
-                                            $gender = $row["gioi_tinh_gv"];
-                                            $ns = $row["ngay_sinh_gv"];
-                                            $sdt = $row["dien_thoai_gv"];
+                                            $name = $row["id_phu_huynh"];
+                                            $id_lop = $row["ten_phu_huynh"];
+                                            $id_gv = $row["ngay_sinh_ph"];
+                                            $gender = $row["gioi_tinh_ph"];
+                                            $sdt = $row["dien_thoai_ph"];
 
                                             echo "<p>" . ($id_lop ?? "Không có") . "</p>";
                                             echo "<p>" . ($name ?? "Không có") . "</p>";
-                                            echo "<p>" . ($id_gv ?? "Không có") . "</p>";
+                                            echo "<p>" . ($date ?? "Không có") . "</p>";
                                             echo "<p>" . ($gender ?? "Không có") . "</p>";
-                                            echo "<p>" . ($ns ?? "Không có") . "</p>";
                                             echo "<p>" . ($sdt ?? "Không có") . "</p>";
                                         } 
                                     }else {
                                         echo "<p>Không có thông tin hiển thị</p>";
                                     }
+
+
+
                                 ?>
                                 </div>
                             </div>
@@ -244,7 +247,7 @@
                         <form action="" method="POST">
                             <div class="row" style="text-align:left">
                                 <div class="col-md-6">
-                                    <label for="newName">Tên giáo viên:</label>
+                                    <label for="newName">Tên phụ huynh:</label>
                                     <input type="text" id="newName" name="newName" value="<?php echo $name;?>"><br>
                                     <br>
                                     <label for="newPhone">Số điện thoại:</label>
@@ -252,7 +255,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="newPhone">Ngày sinh:</label>
-                                    <input type="Date" id="newDate" name="newDate" value="<?php echo $ns;?>"><br>
+                                    <input type="Date" id="newDate" name="newDate" value="<?php echo $date;?>"><br>
                                     <br>
                                     <label for="newGender">Giới tính:</label>
                                     <select id="newGender" name="newGender">
@@ -271,14 +274,13 @@
                                 $newGender = $_POST['newGender'];
 
                                 $user_name = $_SESSION['user_name'];
+                                //Update bảng ph
+                                $sql_update_parents = "UPDATE phu_huynh SET ten_phu_huynh = '$newName', dien_thoai_gv = '$newPhone',
+                                    ngay_sinh_ph = '$newDate', gioi_tinh_ph = '$newGender' WHERE id_phu_huynh =(SELECT id_phu_huynh FROM phu_huynh WHERE ten_phu_huynh = (SELECT full_name FROM users WHERE user_name = '$user_name'))";
 
-                                //Update bảng giáo viên
-                                $sql_update_teacher = "UPDATE giao_vien SET ten_giao_vien = '$newName', dien_thoai_gv = '$newPhone',
-                                    ngay_sinh_gv = '$newDate', gioi_tinh_gv = '$newGender' WHERE id_giao_vien = '$user_name'";
-
-                                $result_update = $conn->query($sql_update_teacher);
+                                $result_update = $conn->query($sql_update_parents);
                                 // Update fullname bảng user
-                                $sql_update_name = "UPDATE users SET fullname = '$newName', ngay_sinh = '$newDate', phone = '$newPhone' WHERE user_name ='$user_name'";
+                                $sql_update_name = "UPDATE users SET fullname = '$newName'WHERE user_name ='$user_name'";
                                 $result_update_name = $conn->query($sql_update_name);
                                 if ($result_update && $result_update_name) {
                                     echo "Chỉnh sửa thành công!";

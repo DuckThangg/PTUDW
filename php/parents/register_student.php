@@ -7,6 +7,43 @@
 
     <link rel="stylesheet" href="/PHP/BTL/css/register_student.css">
     <title>Thêm học sinh</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const gioiTinh = document.getElementById('gioi_tinh_hs').value.toLowerCase();
+                const dienThoai = document.getElementById('dien_thoai_phu_huynh').value;
+                const ngaySinh = document.getElementById('ngay_sinh_hs').value;
+
+                // Kiểm tra giới tính
+                if (gioiTinh !== 'nam' && gioiTinh !== 'nữ') {
+                    alert('Giới tính phải là "nam" hoặc "nữ"');
+                    return;
+                }
+
+                // Kiểm tra số điện thoại
+                if (dienThoai.length !== 10 || isNaN(dienThoai)) {
+                    alert('Số điện thoại phải có đúng 10 chữ số và là số');
+                    return;
+                }
+
+                // Kiểm tra định dạng ngày sinh
+                const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                if (!dateRegex.test(ngaySinh)) {
+                    alert('Ngày sinh phải có định dạng YYYY-MM-DD');
+                    return;
+                }
+
+                // Nếu các điều kiện đều hợp lệ, gửi form
+                form.submit();
+            });
+        });
+    </script>
+
 </head>
 <body>
     <header>
@@ -138,6 +175,8 @@
             }
         }
     ?>
+
+    
 
 </body>
 </html>

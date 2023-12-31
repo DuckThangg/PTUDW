@@ -36,9 +36,7 @@
             if ($result->num_rows > 0) {
                 session_start();
                 $_SESSION['user_name'] = $user_name;
-                echo "<h1 style='text-align: center; margin-top: 200px;'>Đăng nhập thành công, Xin chào $user_name </h1>";
-                echo "<a href='/PHP/BTL/index.php'>Về trang chủ</a>";
-                header("Location: /PHP/BTL/index.php");
+                header("Location: /PHP/BTL/index.php?login_success=true");
             } else {
                 echo"<div class='container'>
                         <h1>Tài khoản hoặc mật khẩu sai</h1>

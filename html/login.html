@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login.css">
     <title>Đăng nhập</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('#form_login').onsubmit = function(event) {
+                const name = document.querySelector('#user_name').value;
+                const password = document.querySelector('#user_password').value;
+    
+                if (name.trim() === '') {
+                    event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu đi
+                    alert('Vui lòng nhập tên đăng nhập');
+                    return false;
+                }
+    
+                if (password.trim() === '') {
+                    event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu đi
+                    alert('Vui lòng nhập mật khẩu');
+                    return false;
+                }
+    
+                // Nếu cả hai trường đều có giá trị, biểu mẫu sẽ tiếp tục gửi đi
+            };
+        });
+    </script>
 </head>
 <body>
     <div>
@@ -13,7 +35,7 @@
     <div class="form">
         <h2>Đăng nhập</h2>
 
-        <form action="/PHP/BTL/php/login.php" method="get">
+        <form action="/PHP/BTL/php/login.php" method="get" id="form_login">
             <div class="input-group">
                 <label for="user_name">Tên đăng nhập</label>
                 <input type="text" id="user_name" name="user_name">

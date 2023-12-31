@@ -65,7 +65,7 @@
                 <input type="text" id="full_name" name="full_name">
             </div>
 
-            <input type="submit" value="Thêm học sinh">
+            <input type="submit" value="Thêm tài khoản">
         </form>
     </div>
         

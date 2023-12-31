@@ -116,3 +116,23 @@ input[type="submit"]:hover {
     background-color: white;
     border-radius: 20px;
 }
+
+#btnTop {
+    display: none; /* Ẩn nút ban đầu */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+#btnTop:hover {
+    background-color: #0056b3;
+}

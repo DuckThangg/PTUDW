@@ -163,5 +163,29 @@
         $conn->close();
     ?>
     </div>
+
+    <button onclick="goToTop()" id="btnTop" title="Lên đầu trang">&#8593;</button>
+
+    <script>
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            let btnTop = document.getElementById("btnTop");
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btnTop.style.display = "block"; /* Hiển thị nút khi cuộn xuống một khoảng cụ thể */
+            } else {
+                btnTop.style.display = "none"; /* Ẩn nút khi đầu trang */
+            }
+        }
+
+        function goToTop() {
+            document.body.scrollTop = 0; /* Đối với Safari */
+            document.documentElement.scrollTop = 0; /* Đối với các trình duyệt khác */
+        }
+
+    </script>
+
 </body>
 </html>

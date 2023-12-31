@@ -17,6 +17,8 @@
             text-align: center;
         }
     </style>
+
+
 </head>
 <body>
     <header>
@@ -49,12 +51,12 @@
                 if($user_role == 'Giáo viên'){
                     echo "
                         <div>
-                            <ul>
-                            <li><a href='/PHP/BTL/php/teacher/class.php'>Lớp học</a></li>
-                            <li><a href='/PHP/BTL/php/teacher/student.php'>Học sinh</a></li>
-                            <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
-                            <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
-                            <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            <ul id='menu-list'>
+                            <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/teacher/class.php'>Lớp học</a></li>
+                            <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/teacher/student.php'>Học sinh</a></li>
+                            <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
+                            <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                            <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                             </ul>
                         </div> ";
                 }
@@ -74,14 +76,14 @@
                 }else{
                     echo "
                         <div>
-                            <ul>
-                                <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
-                                <li><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
-                                <li><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
-                                <li><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
-                                <li><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
-                                <li><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>
-                                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
+                            <ul id='menu-list'>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/class.php'>Lớp học</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/student.php'>Học sinh</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/parents.php'>Phụ huynh</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/teacher/account.php'>Tài khoản</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a href='/PHP/BTL/php/admin/registration_form.php'>Đăng kí học</a></li>
+                                <li onmouseover='moveItem(this, true)' onmouseout='moveItem(this, false)'><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
                             </ul>
                         </div> ";
                 }
@@ -103,5 +105,28 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const loginSuccess = urlParams.get('login_success');
+
+            if (loginSuccess === 'true') {
+                setTimeout(function() {
+                    alert('Đăng nhập thành công');
+                }, 100); // Thời gian trễ 500ms (0.5 giây)
+            }
+        });
+
+
+        function moveItem(element, isOver) {
+            if (isOver) {
+                element.style.transform = 'translateY(-5px)'; // Di chuyển lên trên 10px khi di chuột vào
+                element.style.fontWeight = 'normal'; // Chữ đậm hơn khi di chuột vào
+            } else {
+                element.style.transform = 'translateY(0)'; // Reset vị trí khi di chuột ra
+                element.style.fontWeight = 'bold'; // Trở về font-weight bình thường khi di chuột ra
+            }
+        }
+    </script>
 </body>
 </html>
