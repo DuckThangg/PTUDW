@@ -62,7 +62,6 @@
                         }   
                     } 
                 ?>
-                <li><a href='/PHP/BTL/php/parents/register_student.php'>Đăng kí học</a></li>
                 <li><a href="/PHP/BTL/php/parents/account.php">Tài khoản</a></li>
                 <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
 
