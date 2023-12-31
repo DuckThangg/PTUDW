@@ -103,6 +103,14 @@
         }
     </style>
 
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#editButton').addEventListener('click', function () {
+                document.querySelector('#editSection').style.display = 'block';
+            });
+        });
+    </script>
+
 </head>
 
 <body>
@@ -240,12 +248,15 @@
 
                                 $user_name = $_SESSION['user_name'];
                                 //Update bảng ph
-                                $sql_update_parents = "UPDATE phu_huynh SET ten_phu_huynh = '$newName', dien_thoai_gv = '$newPhone',
-                                    ngay_sinh_ph = '$newDate', gioi_tinh_ph = '$newGender' WHERE id_phu_huynh =(SELECT id_phu_huynh FROM phu_huynh WHERE ten_phu_huynh = (SELECT full_name FROM users WHERE user_name = '$user_name'))";
+                                $sql_update_parents = "UPDATE phu_huynh SET ten_phu_huynh = '$newName', dien_thoai_ph = '$newPhone', 
+                                            ngay_sinh_ph = '$newDate', gioi_tinh_ph = '$newGender' 
+                                            WHERE id_phu_huynh =(SELECT id_phu_huynh FROM phu_huynh 
+                                            WHERE ten_phu_huynh = (SELECT full_name FROM users WHERE user_name = '$user_name'))";
 
                                 $result_update = $conn->query($sql_update_parents);
+                                
                                 // Update fullname bảng user
-                                $sql_update_name = "UPDATE users SET fullname = '$newName'WHERE user_name ='$user_name'";
+                                $sql_update_name = "UPDATE users SET full_name = '$newName'WHERE user_name ='$user_name'";
                                 $result_update_name = $conn->query($sql_update_name);
                                 if ($result_update && $result_update_name) {
                                     echo "Chỉnh sửa thành công!";
@@ -260,13 +271,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('editButton').addEventListener('click', function (e) {
-            e.preventDefault(); 
-        document.getElementById('editSection').style.display = 'block';
-    });
-</script>
 
 </body>
 
