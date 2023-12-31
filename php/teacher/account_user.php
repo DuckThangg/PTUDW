@@ -123,7 +123,7 @@
                 }
                 else{
                     if(newPassword.length >= 8 && rePassword === newPassword && passwordRegex.test(newPassword)){
-                        alert("Bạn đã đăng ký thành công!")
+                        alert("Cập nhật thông tin thành công!")
                     }
                     else{
                         if(newPassword.length < 8){
