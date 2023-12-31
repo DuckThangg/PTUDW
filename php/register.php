@@ -26,22 +26,7 @@
                 <div class="input-group">
                     <label for="position">Chức vụ </label>
                     <select name="position">
-                    <?php
-                    require 'connect.php';
-                    $sql = "SELECT DISTINCT chuc_vu FROM users"; 
-                    mysqli_set_charset($conn, 'UTF8');
-                    $result = $conn->query($sql);
-
-                // Kiểm tra và đổ dữ liệu vào thẻ option
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row['chuc_vu'] . "'>" . $row['chuc_vu'] . "</option>";
-                        }
-                        } else {
-                            echo "<option value=''>No origin found</option>";
-                        }
-                        $conn->close();
-                    ?>
+                        <option value="phu_huynh">Phụ huynh</option>
                     </select>
                 </div>
                 <div class="input-group">
