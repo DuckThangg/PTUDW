@@ -123,7 +123,7 @@
                     
                 } 
             }else{
-                echo "<h3 style="text-align:center">Bạn chưa đăng nhập</h3>";
+                echo "<h3 style="text-align:center;">Bạn chưa đăng nhập</h3>";
             }
         } 
     ?>
