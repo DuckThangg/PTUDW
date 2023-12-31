@@ -42,6 +42,7 @@
                     <img src="/PHP/BTL/images/account.png" alt="account">
                     <p>
                         <?php
+                        if (isset($_GET['id_hoc_sinh'])){
                             $sql = "SELECT * FROM hoc_sinh WHERE id_hoc_sinh = '$id_hoc_sinh'";
                             $result = $conn->query($sql);
                             if($result->num_rows > 0){
@@ -49,8 +50,12 @@
                                 echo "<h4>". $row['ten_hoc_sinh'] . "</h4>";
                             }
                             else{
-                                echo "<p>Không có thông tin hiển thị</p>";
+                                echo "<h3>Không có thông tin hiển thị</h3>";
                             }
+                        }
+                        else{
+                            echo "<h3>Không có thông tin hiển thị</h3>";
+                        }
                         ?>
                     </p>
                 </div>
@@ -74,6 +79,7 @@
                                 <!-- Hiển thị thông tin chi tiết của học sinh từ bảng học sinh với bảng giám hộ và phụ huynh-->
                                 <div class="col-md-7" style="text-align:left">
                                     <?php
+                                    if (isset($_GET['id_hoc_sinh'])){
                                         $sql = "SELECT hoc_sinh.*, giam_ho.*, phu_huynh.*
                                         FROM hoc_sinh
                                         JOIN giam_ho ON hoc_sinh.id_hoc_sinh = giam_ho.id_hoc_sinh
@@ -99,6 +105,9 @@
                                         else{
                                             echo "<p>Không có thông tin hiển thị</p>";
                                         }
+                                    }else{
+                                        echo "<p>Không có thông tin hiển thị</p>";
+                                    }
                                     ?>
                                 </div>
                             </div>

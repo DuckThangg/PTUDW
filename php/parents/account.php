@@ -101,10 +101,6 @@
             margin-bottom:10px;
             padding: 0px;
         }
-
-        #editButton{
-            margin-left:40px;
-        }
     </style>
 
 </head>
@@ -115,38 +111,7 @@
             <a href="/PHP/BTL/index.php"> <img src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
         <?php
-            require "../connect.php";
-            mysqli_set_charset($conn, 'UTF8');
-            session_start();
-            $mysqli = new mysqli("localhost", "root", "", "truong_mam_non");// có thể bỏ nếu k báo lỗi k tìm thấy biến mysqli
-            
-            if (isset($_SESSION['user_name'])){
-        ?>
-            <div>
-                <ul>
-                    <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
-                    <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/parents/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/parents/register_student.php">Đăng kí học</a></li>
-                    <li><a href="/PHP/BTL/php/parents/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-                </ul>
-            </div>
-        <?php
-            }else{
-        ?>
-            <div>
-                <ul>
-                    <li><a href='/PHP/BTL/php/teacher.php'>Giáo viên</a></li>
-                    <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
-                    <li><a href="/PHP/BTL/php/parents/student.php">Học sinh</a></li>
-                    <li><a href="/PHP/BTL/php/parents/register_student.php">Đăng kí học</a></li>
-                    <li><a href="/PHP/BTL/php/parents/account.php">Tài khoản</a></li>
-                    <li><a style='color: red;' href='/PHP/BTL/html/login.html'>Đăng nhập</a></li>
-                </ul>
-            </div>
-        <?php 
-            }
+            require 'header.php';
         ?>
     </header>
 
@@ -179,7 +144,7 @@
                             $user_name = $_SESSION['user_name'];
 
                             $query = "SELECT chuc_vu FROM users WHERE user_name = '$user_name'";
-                            $result = $mysqli->query($query);
+                            $result = $conn->query($query);
 
                             if ($result && $result->num_rows > 0) {
                                 $row = $result->fetch_assoc();
@@ -218,13 +183,13 @@
                                         if ($result->num_rows > 0) {
                                             $row = $result->fetch_assoc();
 
-                                            $name = $row["id_phu_huynh"];
-                                            $id_lop = $row["ten_phu_huynh"];
-                                            $id_gv = $row["ngay_sinh_ph"];
+                                            $id_phu_huynh = $row["id_phu_huynh"];
+                                            $name = $row["ten_phu_huynh"];
+                                            $date = $row["ngay_sinh_ph"];
                                             $gender = $row["gioi_tinh_ph"];
                                             $sdt = $row["dien_thoai_ph"];
 
-                                            echo "<p>" . ($id_lop ?? "Không có") . "</p>";
+                                            echo "<p>" . ($id_phu_huynh ?? "Không có") . "</p>";
                                             echo "<p>" . ($name ?? "Không có") . "</p>";
                                             echo "<p>" . ($date ?? "Không có") . "</p>";
                                             echo "<p>" . ($gender ?? "Không có") . "</p>";

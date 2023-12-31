@@ -18,7 +18,7 @@
                 const gioiTinh = document.getElementById('gioi_tinh_hs').value.toLowerCase();
                 const dienThoai = document.getElementById('dien_thoai_phu_huynh').value;
                 const ngaySinh = document.getElementById('ngay_sinh_hs').value;
-
+                    
                 // Kiểm tra giới tính
                 if (gioiTinh !== 'nam' && gioiTinh !== 'nữ') {
                     alert('Giới tính phải là "nam" hoặc "nữ"');
@@ -51,16 +51,9 @@
             <a href="/PHP/BTL/index.php"> <img  src="/PHP/BTL/images/icon-2.png" alt=""> </a>
         </div>
 
-        <div>
-            <ul>
-                <li><a href="/PHP/BTL/php/teacher.php">Giáo viên</a></li>
-                <li><a href="/PHP/BTL/php/class.php">Lớp học</a></li>
-                <li><a href="/PHP/BTL/php/parents/student.php">Học sinh</a></li>
-                <li><a href="/PHP/BTL/php/parents/register_student.php">Đăng kí học</a></li>
-                <li><a href="/PHP/BTL/php/parents/account.php">Tài khoản</a></li>
-                <li><a style='color: red;' href='/PHP/BTL/php/logout.php'>Đăng xuất</a></li>
-            </ul>
-        </div>
+        <?php
+            require 'header.php';
+        ?>
     </header>
 
     <div class="form">
@@ -153,7 +146,7 @@
         
     <?php
         if (isset($_GET['submit'])) {
-            require "../connect.php";
+            require "connect.php";
             mysqli_set_charset($conn, 'UTF8');
 
             $ten_hoc_sinh = $_GET['ten_hoc_sinh'];
@@ -166,7 +159,7 @@
             $nam_hoc = $_GET['nam_hoc'];
             
             $add_register = "INSERT INTO `phieu_dang_ky`(`ten_hoc_sinh`, `ngay_sinh_hs`, `gioi_tinh_hs`, `dia_chi_hs`, `loai_lop_dang_ky`, `ten_phu_huynh`, `dien_thoai_phu_huynh`, `nam_hoc`) 
-                             VALUES ('$ten_hoc_sinh','$ngay_sinh_hs','$gioi_tinh_hs','$dia_chi_hs','$loai_lop_dang_ki','$ten_phu_huynh','$dien_thoai_phu_huynh','$nam_hoc')";
+                            VALUES ('$ten_hoc_sinh','$ngay_sinh_hs','$gioi_tinh_hs','$dia_chi_hs','$loai_lop_dang_ki','$ten_phu_huynh','$dien_thoai_phu_huynh','$nam_hoc')";
 
             if ($conn->query($add_register)===TRUE) {
                 echo "<h1 style='text-align:center;color:white;margin-top:20px' >Đăng kí thành công, vui lòng chờ quản trị viên xét duyệt !</h1>";

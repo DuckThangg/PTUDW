@@ -48,12 +48,12 @@ a{
 }
 
 /* Định dạng dòng chẵn */
-.even-row {
+.my-table .even-row {
     background-color: #ffffff; /* Màu nền trắng */
 }
 
 /* Định dạng dòng lẻ */
-.odd-row {
+.my-table .odd-row {
     background-color: #a8e6cf; /* Màu nền xanh lục */
 }
 
